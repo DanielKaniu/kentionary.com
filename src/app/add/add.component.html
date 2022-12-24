@@ -1,0 +1,142 @@
+<mat-accordion class="example-headers-align">
+    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Translate from:
+        </mat-panel-title>
+        <mat-panel-description>
+          Enter the word(s) to translate from
+          <mat-icon>account_circle</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+  
+    <mat-form-field appearance="fill">
+        <mat-label>Language</mat-label>
+        <mat-select [formControl]="animalControl" required>
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let animal of animals" [value]="animal">
+                {{animal.name}}
+            </mat-option>
+        </mat-select>
+        <mat-error *ngIf="animalControl.hasError('required')">Please choose a language</mat-error>
+        <mat-hint>{{animalControl.value?.sound}}</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Word</mat-label>
+        <input type="text" matInput [formControl]="emailFormControl">
+        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+            Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="emailFormControl.hasError('required')">
+            Email is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+        <mat-label>Enter meaning in ...</mat-label>
+        <textarea matInput></textarea>
+      </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Type a sentence in ...</mat-label>
+        <input type="text" matInput [formControl]="emailFormControl">
+        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+            Please enter a sentence example.
+        </mat-error>
+        <mat-error *ngIf="emailFormControl.hasError('required')">
+            Email is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+      <mat-action-row>
+        <button mat-button color="primary" (click)="nextStep()">Next</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  
+    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Translate to:
+        </mat-panel-title>
+        <mat-panel-description>
+            Enter the word(s) to translate
+          <mat-icon>map</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Language</mat-label>
+        <mat-select [formControl]="animalControl" required>
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let animal of animals" [value]="animal">
+                {{animal.name}}
+            </mat-option>
+        </mat-select>
+        <mat-error *ngIf="animalControl.hasError('required')">Please choose a language</mat-error>
+        <mat-hint>{{animalControl.value?.sound}}</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Word</mat-label>
+        <input type="text" matInput [formControl]="emailFormControl">
+        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+            Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="emailFormControl.hasError('required')">
+            Email is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+        <mat-label>Enter meaning in ...</mat-label>
+        <textarea matInput></textarea>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Type a sentence in ...</mat-label>
+        <input type="text" matInput [formControl]="emailFormControl">
+        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+            Please enter a sentence example.
+        </mat-error>
+        <mat-error *ngIf="emailFormControl.hasError('required')">
+            Email is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+        <mat-label>Parts of Speech</mat-label>
+        <mat-select [formControl]="animalControl" required>
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let animal of animals" [value]="animal">
+                {{animal.name}}
+            </mat-option>
+        </mat-select>
+        <mat-error *ngIf="animalControl.hasError('required')">Please choose a part of speech</mat-error>
+        <mat-hint>{{animalControl.value?.sound}}</mat-hint>
+    </mat-form-field>
+  
+      <mat-action-row>
+        <button mat-button color="warn" (click)="prevStep()">Previous</button>
+        <button mat-button color="primary" (click)="nextStep()">Next</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  
+    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Synonyms
+        </mat-panel-title>
+        <mat-panel-description>
+          Enter similar words in various languages
+          <mat-icon>date_range</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+  
+      <mat-action-row>
+        <button mat-button color="warn" (click)="prevStep()">Previous</button>
+        <button mat-button color="primary" (click)="nextStep()">End</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  
+  </mat-accordion>
+  
