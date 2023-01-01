@@ -1,0 +1,1 @@
+SELECT DISTINCT term.type as category FROM `term`

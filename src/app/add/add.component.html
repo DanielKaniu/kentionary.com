@@ -1,142 +1,156 @@
 <mat-accordion class="example-headers-align">
-    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Translate from:
-        </mat-panel-title>
-        <mat-panel-description>
-          Enter the word(s) to translate from
-          <mat-icon>account_circle</mat-icon>
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-  
+  <!-- 
+  Translate. -->
+  <mat-expansion-panel #exp_one [expanded]="step === 0" (opened)="setStep(0)" [disabled]="!is_disabled">
+    <mat-expansion-panel-header>
+      <mat-panel-title> Add new: </mat-panel-title>
+      <mat-panel-description>
+        Enter the new translations
+        <mat-icon>account_circle</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <h3>Translate from:</h3>
+
     <mat-form-field appearance="fill">
-        <mat-label>Language</mat-label>
-        <mat-select [formControl]="animalControl" required>
-            <mat-option>--</mat-option>
-            <mat-option *ngFor="let animal of animals" [value]="animal">
-                {{animal.name}}
-            </mat-option>
-        </mat-select>
-        <mat-error *ngIf="animalControl.hasError('required')">Please choose a language</mat-error>
-        <mat-hint>{{animalControl.value?.sound}}</mat-hint>
+      <mat-label>Language</mat-label>
+      <mat-select [formControl]="language_one_control" required>
+        <mat-option *ngFor="let lang of languages" [value]="lang.name">
+          {{ lang.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="language_one_control.hasError('required')"
+        >Please choose a language</mat-error
+      >
     </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>Word</mat-label>
-        <input type="text" matInput [formControl]="emailFormControl">
-        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-            Please enter a valid email address
-        </mat-error>
-        <mat-error *ngIf="emailFormControl.hasError('required')">
-            Email is <strong>required</strong>
-        </mat-error>
-    </mat-form-field>
-    <br>
     <mat-form-field appearance="fill">
-        <mat-label>Enter meaning in ...</mat-label>
-        <textarea matInput></textarea>
-      </mat-form-field>
-    <br>
-    <mat-form-field>
-        <mat-label>Type a sentence in ...</mat-label>
-        <input type="text" matInput [formControl]="emailFormControl">
-        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-            Please enter a sentence example.
-        </mat-error>
-        <mat-error *ngIf="emailFormControl.hasError('required')">
-            Email is <strong>required</strong>
-        </mat-error>
+      <mat-label>Word</mat-label>
+      <input type="text" matInput [formControl]="translate_from_control" />
+      <mat-error *ngIf="translate_from_control.hasError('required')">
+        A word is <strong>required</strong>
+      </mat-error>
     </mat-form-field>
-      <mat-action-row>
-        <button mat-button color="primary" (click)="nextStep()">Next</button>
-      </mat-action-row>
-    </mat-expansion-panel>
-  
-    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Translate to:
-        </mat-panel-title>
-        <mat-panel-description>
-            Enter the word(s) to translate
-          <mat-icon>map</mat-icon>
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-  
-      <mat-form-field appearance="fill">
-        <mat-label>Language</mat-label>
-        <mat-select [formControl]="animalControl" required>
-            <mat-option>--</mat-option>
-            <mat-option *ngFor="let animal of animals" [value]="animal">
-                {{animal.name}}
-            </mat-option>
-        </mat-select>
-        <mat-error *ngIf="animalControl.hasError('required')">Please choose a language</mat-error>
-        <mat-hint>{{animalControl.value?.sound}}</mat-hint>
+    <br />
+
+    <mat-form-field appearance="fill">
+      <mat-label>Enter meaning in ...</mat-label>
+      <textarea matInput [formControl]="meaning_from_control"></textarea>
+      <mat-error *ngIf="meaning_from_control.hasError('required')">
+        Meaning is <strong>required</strong>
+      </mat-error>
     </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>Word</mat-label>
-        <input type="text" matInput [formControl]="emailFormControl">
-        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-            Please enter a valid email address
-        </mat-error>
-        <mat-error *ngIf="emailFormControl.hasError('required')">
-            Email is <strong>required</strong>
-        </mat-error>
-    </mat-form-field>
-    <br>
     <mat-form-field appearance="fill">
-        <mat-label>Enter meaning in ...</mat-label>
-        <textarea matInput></textarea>
+      <mat-label>Example sentence in ...</mat-label>
+      <input type="text" matInput [formControl]="sentence_from_control" />
     </mat-form-field>
-    <br>
-    <mat-form-field>
-        <mat-label>Type a sentence in ...</mat-label>
-        <input type="text" matInput [formControl]="emailFormControl">
-        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-            Please enter a sentence example.
-        </mat-error>
-        <mat-error *ngIf="emailFormControl.hasError('required')">
-            Email is <strong>required</strong>
-        </mat-error>
-    </mat-form-field>
-    <br>
+    <br /><mat-divider></mat-divider><br>
+
+    <h3>Translate to:</h3>
+
     <mat-form-field appearance="fill">
-        <mat-label>Parts of Speech</mat-label>
-        <mat-select [formControl]="animalControl" required>
-            <mat-option>--</mat-option>
-            <mat-option *ngFor="let animal of animals" [value]="animal">
-                {{animal.name}}
-            </mat-option>
-        </mat-select>
-        <mat-error *ngIf="animalControl.hasError('required')">Please choose a part of speech</mat-error>
-        <mat-hint>{{animalControl.value?.sound}}</mat-hint>
+      <mat-label>Language</mat-label>
+      <mat-select [formControl]="language_two_control" required>
+        <mat-option>--</mat-option>
+        <mat-option *ngFor="let lang of languages" [value]="lang.name">
+          {{ lang.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="language_two_control.hasError('required')">
+        Please choose a language
+      </mat-error>
     </mat-form-field>
-  
-      <mat-action-row>
-        <button mat-button color="warn" (click)="prevStep()">Previous</button>
-        <button mat-button color="primary" (click)="nextStep()">Next</button>
-      </mat-action-row>
-    </mat-expansion-panel>
-  
-    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Synonyms
-        </mat-panel-title>
-        <mat-panel-description>
-          Enter similar words in various languages
-          <mat-icon>date_range</mat-icon>
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-  
-      <mat-action-row>
-        <button mat-button color="warn" (click)="prevStep()">Previous</button>
-        <button mat-button color="primary" (click)="nextStep()">End</button>
-      </mat-action-row>
-    </mat-expansion-panel>
-  
-  </mat-accordion>
-  
+
+    <mat-form-field appearance="fill">
+      <mat-label>Word</mat-label>
+      <input type="text" matInput [formControl]="translate_to_control" />
+      <mat-error *ngIf="translate_to_control.hasError('required')">
+        A word is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Enter meaning in ...</mat-label>
+      <textarea matInput [formControl]="meaning_to_control"></textarea>
+      <mat-error *ngIf="meaning_to_control.hasError('required')">
+        Meaning is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Example sentence in ...</mat-label>
+      <input type="text" matInput [formControl]="sentence_to_control" />
+    </mat-form-field><br />
+
+    <mat-form-field appearance="fill">
+      <mat-label>Parts of Speech</mat-label>
+      <mat-select [formControl]="category_control" required>
+        <mat-option>--</mat-option>
+        <mat-option *ngFor="let category of categories" [value]="category.category">
+          {{ category.category }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="category_control.hasError('required')">
+        Please choose a part of speech
+      </mat-error>
+    </mat-form-field>
+
+
+    <mat-action-row>
+      <button mat-button color="primary" (click)="nextStep()">Next</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+  <!-- 
+  The synonyms. -->
+  <mat-expansion-panel #exp_three [expanded]="step === 1" (opened)="setStep(1)" [disabled]="is_disabled">
+    <mat-expansion-panel-header>
+      <mat-panel-title> Synonyms: </mat-panel-title>
+      <mat-panel-description>
+        Enter similar words in various languages
+        <mat-icon>date_range</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <h3>A word in another language <b>(Optional)</b></h3>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Language</mat-label>
+      <mat-select [formControl]="language_three_control" required>
+        <mat-option *ngFor="let lang of languages" [value]="lang.name">
+          {{ lang.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="language_three_control.hasError('required')"
+        >Please choose a language</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Word</mat-label>
+      <input type="text" matInput [formControl]="synonym_word_control" />
+      <mat-error *ngIf="synonym_word_control.hasError('required')">
+        A word is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <br />
+
+    <mat-form-field appearance="fill">
+      <mat-label>Enter meaning in ...</mat-label>
+      <textarea matInput [formControl]="synonym_meaning_control"></textarea>
+      <mat-error *ngIf="synonym_meaning_control.hasError('required')">
+        Meaning is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Example sentence in ...</mat-label>
+      <input type="text" matInput [formControl]="synonym_sentence_control" />
+    </mat-form-field>
+
+    <mat-action-row>
+      <button mat-button color="warn" (click)="prevStep()">Previous</button>
+      <button mat-button color="primary" (click)="nextStep()">Save</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>

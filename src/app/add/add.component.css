@@ -1,0 +1,11 @@
+/*
+Style the expansion panel. */
+mat-expansion-panel{
+    background: rgb(237, 237, 157);
+}
+/*
+Style the form field. */
+mat-form-field{
+    margin-left: 10%;
+    width: 35%;
+}
