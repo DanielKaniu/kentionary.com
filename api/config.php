@@ -31,22 +31,6 @@ if($_SERVER["REQUEST_METHOD"] == "OPTIONS"){
     // exit(0);
 }
 //
-//Connect to the database;
-class config {
-    //
-    //Properties.
-    public $host = "localhost";
-    public $user = "root";
-    public $password = "";
-    public $db_name = "kenny";
-    //
-    //Use pdo to establish the connection.
-    public function connect() {
-        //
-        //Establish connection to database.
-        $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->db_name;
-        $pdo = new PDO($dsn,$this->user,$this->password);
-        //
-        return $pdo;
-    }
-}
+//Connect to the database (Procedurally).
+$dsn = 'mysql:host=' . 'localhost'. ';dbname=' . 'kenny';
+$pdo = new PDO($dsn,'root','');

@@ -11,7 +11,7 @@ import { AppComponent } from './app.component';
 import { AddComponent } from './add/add.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { TranslateComponent } from './translate/translate.component';
-import { terms } from './add/add.component';
+import { terms_dialog } from './dialog/dialog';
 
 //
 //Bring in material UI elements.
@@ -22,6 +22,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     PageNotFoundComponent,
     TranslateComponent,
     AddComponent,
-    terms
+    terms_dialog
   ],
   imports: [
     BrowserModule,
@@ -44,7 +45,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatExpansionModule,
     MatIconModule,
     MatDividerModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule
   ],
   exports: [RouterModule],
   providers: [],

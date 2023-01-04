@@ -27,5 +27,41 @@ export interface Term{
 //
 //The nature of the words that are to be used to search for terms.
 export interface Word_for_term {
-    word: string;
+    word: string | null;
+}
+//
+//The term the user creates when s/he doesn't find a term of choice.
+export interface New_term{
+    term: string | null;
+    category: string | null;
+}
+//
+//The translations to save in the database.
+export interface Word_to_save{
+    word_from: {
+        language: string | null;
+        word: string | null;
+        meaning: string | null;
+        sentence?: string | null;
+    };
+    word_to: {
+        language: string | null;
+        word: string | null;
+        meaning: string | null;
+        sentence?: string | null;
+    }
+    synonym: {
+        language: string | null;
+        word: string | null;
+        meaning: string | null;
+        sentence?: string | null;
+    }
+}
+//
+//The structure the results from the database.
+export interface Check {
+    success: boolean;
+    data: {
+        result: string;
+    }
 }

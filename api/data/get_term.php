@@ -11,9 +11,11 @@ $word_one = $word['word'][0];
 $word_two = $word['word'][1];
 //
 //Fetch terms from the database.
-class term extends config{
+class term{
     //
     function search_term($word_one, $word_two){
+        //
+        global $pdo;
         //
         //The query that gets the data.
         $query = "SELECT DISTINCT
@@ -30,7 +32,7 @@ class term extends config{
                 word.name = '$word_one' OR word.name = '$word_two'";
         //
         //Execute the query.
-        $statement = $this->connect()->query($query);
+        $statement = $pdo->query($query);
         //
         //Bring back the result.
         while ($row = $statement->fetchAll(PDO::FETCH_ASSOC)) {

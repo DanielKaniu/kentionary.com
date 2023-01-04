@@ -1,10 +1,14 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import { CategoryService } from 'src/services/category.service';
 import { LanguageService } from 'src/services/language.service';
-import { Category, Language, Term, Word_for_term } from 'src/types/types';
-import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import { TermService } from 'src/services/term.service';
+import { Category, Check, Language, New_term, Word_for_term, Word_to_save } from 'src/types/types';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { terms_snack_bar } from '../snackbar/snackbar';
+import { terms_dialog } from '../dialog/dialog';
+import { CheckService } from 'src/services/check.service';
+import { SaveService } from 'src/services/save.service';
 //
 @Component({
   selector: 'app-add',
@@ -19,38 +23,39 @@ export class AddComponent implements OnInit {
   @ViewChild('exp_two') exp_two!: ElementRef;
   @ViewChild('exp_three') exp_three!: ElementRef;
   //
+  //Show/hide the expansion panels.
   is_disabled?: boolean = true;
   //
   //Each step of an expansion panel.
   step = 0;
   //
   //The term/object the user wants to translate.
-  selected_term?: string;
+  selected_term?: New_term;
   //
   //The word(s) to translate.
-  translate_from_control = new FormControl('', Validators.required);
-  translate_to_control = new FormControl('', Validators.required);
+  translate_from_control = new FormControl('nyumba', Validators.required);
+  translate_to_control = new FormControl('home', Validators.required);
   //
   //Example sentence(s).
   sentence_to_control = new FormControl();
   sentence_from_control = new FormControl();
   //
   //Synonym(s) form control.
-  synonym_word_control = new FormControl('', Validators.required);
-  synonym_meaning_control = new FormControl('', Validators.required);
+  synonym_word_control = new FormControl('mucii', Validators.required);
+  synonym_meaning_control = new FormControl('handu ha guikara', Validators.required);
   synonym_sentence_control = new FormControl('', Validators.required);
   //
   //Language form control.
-  language_one_control = new FormControl<Language | ''>('', Validators.required);
-  language_two_control = new FormControl<Language | ''>('', Validators.required);
-  language_three_control = new FormControl<Language | ''>('', Validators.required);
+  language_one_control = new FormControl('Swahili', Validators.required);
+  language_two_control = new FormControl('English', Validators.required);
+  language_three_control = new FormControl('Gikuyu', Validators.required);
   //
   //Meaning form control.
-  meaning_from_control = new FormControl('', Validators.required);
-  meaning_to_control = new FormControl('', Validators.required);
+  meaning_from_control = new FormControl('pahali pa kuishi', Validators.required);
+  meaning_to_control = new FormControl('a place to live in', Validators.required);
   //
   //Category form control.
-  category_control = new FormControl<Category | ''>('', Validators.required);
+  category_control = new FormControl('noun', Validators.required);
   //
   //The list of languages, from the database.
   languages?: Array<Language['data']>;
@@ -60,17 +65,29 @@ export class AddComponent implements OnInit {
   //
   //Compile the words to use to get the terms.
   words_for_terms: Array<string> = [];
+  //
+  //How long the snackbar shows.
+  duration: number = 5;
 
   constructor(
     //
     //The language service.
-    private language_service: LanguageService,
+    public language_service: LanguageService,
     //
     //The category service.
-    private category_service: CategoryService,
+    public category_service: CategoryService,
+    //
+    //The service that checks if the translations are linked to  a term.
+    private check_service: CheckService,
+    //
+    //The service that links words to their terms upon checking.
+    private save_service: SaveService,
     //
     //The dialog box.
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    //
+    //The snackbar.
+    public _snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -111,8 +128,6 @@ export class AddComponent implements OnInit {
   //Navigate the user forward.
   nextStep() {
     //
-    this.openDialog(this.words_for_terms);
-    //
     //Step one.
     if(this.step === 0){
       //
@@ -128,7 +143,7 @@ export class AddComponent implements OnInit {
       ){
         //
         //Alert the user to fill in some required values.
-        alert('Missing value(s)');
+        this.open_snackbar('Missing value(s)');
         //
         //Keep the user in the current step, to get some values from him/her.
         this.step = 0;
@@ -150,19 +165,31 @@ export class AddComponent implements OnInit {
       //
       //Ensure the user provides values, to proceed to the next step.
       if(
-        this.language_one_control.value === '' || 
-        this.translate_from_control.value === '' || 
-        this.meaning_from_control.value === '' ||
-        this.language_two_control.value === '' || 
-        this.translate_to_control.value === '' || 
-        this.meaning_to_control.value === '' ||
+        this.language_three_control.value === '' || 
+        this.synonym_word_control.value === '' || 
+        this.synonym_meaning_control.value === '' ||
         this.category_control.value === ''
       ){
         //
-        //Confirm that the user knows not any synonyms for the words.
-        alert("Are you sure you don't know any synonyms?");
+        //Get some response from the snackbar.
+        const val = confirm("Proceed without synonyms?");
+        //
+        //Check the user's response.
+        if(val === true){
+          //
+          //Pass the words that will use to get the terms to the dialog box
+          this.openDialog(this.words_for_terms);
+        }
+        else{
+          //
+          //Ask the user to provide synonym.
+          this.open_snackbar('Please provide a synonym');
+        }
       }
-      else{        
+      else{   
+        //
+        //Save the synonym globally.
+        this.words_for_terms.push(this.synonym_word_control.value!);  
         //
         //Pass the words that will use to get the terms to the dialog box
         this.openDialog(this.words_for_terms);
@@ -183,134 +210,202 @@ export class AddComponent implements OnInit {
   //Pop up the dialog box.
   openDialog(word: Array<string> | null): void {
     //
-    const dialogRef: MatDialogRef<terms, any> = this.dialog.open(terms, {
+    const dialogRef: MatDialogRef<terms_dialog, any> = this.dialog.open(terms_dialog, {
       data: {word: word, category: this.categories},
     });
     //
     //Get data passed from the dialog after closing.
     dialogRef.afterClosed().subscribe(result => {
+      //
+      //Save the selected term globally.
       this.selected_term = result;
-      console.log(this.selected_term);
+      //
+      //Check if the word and the term are linked.
+      this.check_and_save();
     });
   }
-}
-//
-//The dialog for terms.
-@Component({
-  selector: 'terms_dialog',
-  templateUrl: 'terms_dialog.html',
-  styleUrls: ['./terms_dialog.css']
-})
-//
-export class terms {
   //
-  //Get the div element on which to attach the terms.
-  @ViewChild('divTerms') div_terms!: ElementRef;
-  @ViewChild('newTerm') new_term!: ElementRef;
-  //
-  //Show/hide the create new term elements.
-  is_hidden: boolean = true
-  //
-  //The form controls.
-  term_control = new FormControl('', Validators.required);
-  category_control = new FormControl('', Validators.required);
-  //
-  //The terms.
-  terms?: Array<Term['data']>;
-  //
-  //The term for which the user wants to add a translation.
-  selected_term?: string;
-  //
-  //The English catogories, provided for in the database.
-  categories?: Array<Category['data']>;
-  //
-  constructor(
+  //Display the snackbar accordingly.
+  open_snackbar(message: string) {
     //
-    //The terms service.
-    private term_service: TermService,
-    //
-    //The dialog class.
-    public dialogRef: MatDialogRef<terms>,
-    //
-    //The data passed from where this dialog is called.
-    @Inject(MAT_DIALOG_DATA) public data: any,
-  ) {}
-  //
-  //Get the terms after initializing the view.
-  ngAfterViewInit(): void {
-    //
-    //Get the terms associated with the word provided by the user.
-    this.get_terms();
+    this._snackBar.openFromComponent(terms_snack_bar, {
+      duration: this.duration * 1000,
+      data: {msg: message}
+    });
   }
   //
-  //Fetch the terms.
-  get_terms(){
+  //Check if the translations are linked to the chosen term
+  check_and_save(): void{
     //
-    //Call the service responsible for sending the data to the database.
-    this.term_service.get_term(this.data).subscribe(
+    //Compile content of the word to translate from.
+    const translate_from: Word_for_term = {
+      word: this.translate_from_control.value
+    }
+    //
+    //Compile content of the word to translate to.
+    const translate_to: Word_for_term = {
+      word: this.translate_to_control.value
+    }
+    //
+    //Compile content of the synonyms.
+    const synonym: Word_for_term = {
+      word: this.synonym_word_control.value
+    }
+    //
+    //Compile the values.
+    const values = {
+      translate_from: translate_from,
+      translate_to: translate_to,
+      synonym: synonym,
+      term: this.selected_term?.term
+    }
+    //
+    //First check if the words are linked to the selected term.
+    this.check_service.check(values).subscribe(
       //
       (response: any) => {
         //
-        //Ensure the fetching is successful.
-        if(response.success === true){
+        //First ensure we have a response from the database.
+        if (response.success === true) {
           //
-          //Save the terms globally.
-          this.terms = response.data;
+          //Save the response globally.
+          const check_response: string = response.data;
           //
-          //Create radio buttons, on which to attach the terms.
-          this.make_radios(); 
+          //Save the new translations, if they are not linked to a term.
+          this.save(check_response);
+        }
+        else{
+          //
+          //Let the user know the checking is unsuccessful.
+          this.open_snackbar('Unable to check, try again');
         }
       }
-    )
+    );
   }
   //
-  //Make radio buttons.
-  make_radios(){
+  //Save the translation in the database.
+  save(check_response: string): void{
     //
-    //Get the data from the response.
-    this.terms!.forEach((datum: any) => {
+    //Compile content of the word to translate from.
+    const translation_from: Word_to_save['word_from'] = {
+      language: this.language_one_control.value,
+      word: this.translate_from_control.value,
+      meaning: this.meaning_from_control.value,
+      sentence: this.sentence_from_control.value,
+    }
+    //
+    //Compile content of the word to translate to.
+    const translation_to = {
+      language: this.language_two_control.value,
+      word: this.translate_to_control.value,
+      meaning: this.meaning_to_control.value,
+      sentence: this.sentence_to_control.value,
+    }
+    //
+    //Compile content of the synonyms.
+    const synonym = {
+      language: this.language_three_control.value,
+      word: this.synonym_word_control.value,
+      meaning: this.synonym_meaning_control.value,
+      sentence: this.synonym_sentence_control.value,
+    }
+    //
+    //Compile the values.
+    const values = {
+      translation_from: translation_from,
+      translation_to: translation_to,
+      synonym: synonym,
+      term: this.selected_term
+    }
+    //
+    //Verify the results from checking the link between a word and a term.
+    this.verify(check_response, values);
+  }
+  //
+  //Verify the results from checking the link between a word and a term.
+  verify(check_response: string, values: any){
+    //
+    //Loop through all the responses from checking and do the necessary action
+    switch (check_response) {
       //
-      //Compile the terms to attach to the label.
-      const term = `${datum.object} (${datum.category})`;
-      //
-      //Create the elements that will hold the terms.
-      const label = document.createElement('label');
-      const radio = document.createElement('input');
-      const line_break = document.createElement('br');
-      //
-      //Set attributes on the created elements.
-      radio.setAttribute('type', 'radio');
-      radio.setAttribute('name', 'terms');
-      radio.addEventListener('click', () =>{
+      case 'all':
         //
-        //Save the selected term globally.
-        this.selected_term = datum.object;
-      } )
+        //The translations already exist in the database, can't save them.
+        this.open_snackbar('Translations already exist');   
+        break;
       //
-      //Attach some values to the elements.
-      label.innerText = term;
-      label.appendChild(radio);
-      label.appendChild(line_break);
+      case 'none':
+        //
+        //Save the translation_from, translation_to and synonym. Link them to the 
+        //selected term.
+
+        //
+        this.open_snackbar('none');   
+        break;
       //
-      //Attach the elements to the parent element.
-      this.div_terms.nativeElement.prepend(label);
-    })
-  }
-  //
-  //Get the selected term.
-  get_selected_term(): void{
-    //
-    this.dialogRef.close(this.selected_term);
-  }
-  //
-  //Create a new term since the user has not seen the term s/he is looking for.
-  create_term(): void{
-    //
-    //Show the panel for creating a new term
-    this.is_hidden = false;
-    //
-    //Save the categories passed from the parent to the dialog.
-    this.categories = this.data.category;
-    console.log(this.categories);
-  }
+      case 'translation_from':
+        //
+        //Save the translation_to and synonym in the database, link them with the 
+        //selected term.
+
+        //
+        this.open_snackbar('translation_from');   
+        break;
+      //
+      case 'translation_to':
+        //
+        //Save the translation_from and synonym in the database, link them with the 
+        //selected term.
+
+        //
+        this.open_snackbar('translation_to');   
+        break;
+      //
+      case 'synonym':
+        //
+        //Save the translation_from and translation_to in the database, link them with the 
+        //selected term.
+
+        //
+        this.open_snackbar('synonym');   
+        break;
+      //
+      case 'translation_from_to':
+        //
+        //Save the synonym in the database, link it with the selected term.
+        
+        //
+        this.open_snackbar('translation_from_to');   
+        break;
+      //
+      case 'translation_from_synonym':
+        //
+        //Save the translation_to in the database, link it with the selected term.
+        
+        //
+        this.open_snackbar('translation_from_synonym');   
+        break;
+      //
+      case 'translation_to_synonym':
+        //
+        //Save the translation_from in the database, link it with the selected term.
+        this.save_service.save(values).subscribe(
+          //
+          response => {
+            //
+            console.log(response);
+          }
+        );
+        //
+        this.open_snackbar('translation_to_synonym');   
+        break;
+      //
+      default:
+        //
+        //It is extremely hard to reach this point.
+        //
+        this.open_snackbar('Unreachable zone'); 
+        break;
+    }
+   }
 }
