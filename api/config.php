@@ -32,5 +32,5 @@ if($_SERVER["REQUEST_METHOD"] == "OPTIONS"){
 }
 //
 //Connect to the database (Procedurally).
-$dsn = 'mysql:host=' . 'localhost'. ';dbname=' . 'kenny';
+$dsn = 'mysql:host=' . 'localhost'. ';dbname=' . 'keny';
 $pdo = new PDO($dsn,'root','');

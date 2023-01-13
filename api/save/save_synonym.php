@@ -6,7 +6,7 @@ include_once '../create/create.php';
 include_once '../data/get_ids.php';
 //
 //Save the word to translate from.
-function save_translation_from($translation_from, $translation_to, $synonym, $term){
+function save_synonym($translation_from, $translation_to, $synonym, $term){
     //
     //The words to add in the database.
     $word_from = $translation_from['word'];
@@ -45,39 +45,38 @@ function save_translation_from($translation_from, $translation_to, $synonym, $te
     $example_synonym = $synonym['sentence'];
     //
     //Check if the word already exists in the database.
-    $state_from = check_if_word_exists($word_from);
+    $state_synonym = check_if_word_exists($word_synonym);
     //
     //After checking if word exists in the word table, proceed accordingly.
-    if ($state_from === true) {
+    if ($state_synonym === true) {
             //
             //1. Create the required translation and synonym (for the word to translate from).
-            create_translation_and_synonym($term_id, $language_from_id, $word_from_id);
+            create_translation_and_synonym($term_id, $language_synonym_id, $word_synonym_id);
+            //
+            //Add the meaning and example for the synonym.
+            create_meaning_example($term_id, $word_synonym, $language_synonym_id, $meaning_synonym, $example_synonym);
             //
             //Add the meaning and example for the word to translate from.
             create_meaning_example($term_id, $word_from, $language_from_id, $meaning_from, $example_from);
             //
             //Add the meaning and example for the word to translate to.
             create_meaning_example($term_id, $word_to, $language_to_id, $meaning_to, $example_to);
-            //
-            //Add the meaning and example for the synonym.
-            create_meaning_example($term_id, $word_synonym, $language_synonym_id, $meaning_synonym, $example_synonym);
     }
     else{
         //
         // Create the word, its synonym and translation. This will link them to the 
         //right term.
         create_word_translation_synonym(
-            $term_id, $language_from_id, $word_from, $meaning_from, $example_from
+            $term_id, $language_synonym_id, $word_synonym, $meaning_synonym, $example_synonym
         );
+        //
+        //Add the meaning and example for the synonym.
+        create_meaning_example($term_id, $word_synonym, $language_synonym_id, $meaning_synonym, $example_synonym);
         //
         //Add the meaning and example for the word to translate from.
         create_meaning_example($term_id, $word_from, $language_from_id, $meaning_from, $example_from);
         //
         //Add the meaning and example for the word to translate to.
         create_meaning_example($term_id, $word_to, $language_to_id, $meaning_to, $example_to);
-        //
-        //Add the meaning and example for the synonym.
-        create_meaning_example(
-            $term_id, $word_synonym, $language_synonym_id, $meaning_synonym, $example_synonym);
     }
 }

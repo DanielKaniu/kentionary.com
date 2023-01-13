@@ -28,6 +28,7 @@ export interface Term{
 //The nature of the words that are to be used to search for terms.
 export interface Word_for_term {
     word: string | null;
+    language: string | null;
 }
 //
 //The term the user creates when s/he doesn't find a term of choice.
@@ -64,4 +65,9 @@ export interface Check {
     data: {
         result: string;
     }
+}
+//
+//The results after successfully saving a translation.
+export interface Save_result{
+    success: boolean;
 }

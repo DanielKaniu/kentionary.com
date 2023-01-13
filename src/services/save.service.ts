@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Check } from 'src/types/types';
+import { Check, Save_result } from 'src/types/types';
 //
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class SaveService {
   //Save the translationsand link them with their respective terms.
   save(values: any){
     //
-    return this.http.post<Check>(
+    return this.http.post<Save_result>(
         //
         //The API URL.
         this.url + 'save.php',

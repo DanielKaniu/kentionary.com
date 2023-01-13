@@ -8,36 +8,57 @@ $word = $data['values'];
 //
 //The word to translate from.
 $translate_from = $word['translate_from']['word'];
+$language_from = $word['translate_from']['language'];
 //
-//The word to translate from.
+//The word to translate to.
 $translate_to = $word['translate_to']['word'];
+$language_to = $word['translate_to']['language'];
 //
 //The word to translate from.
 $synonym = $word['synonym']['word'];
+$language_synonym = $word['synonym']['language'];
 //
 //The term name.
 $term = $word['term'];
 //
-//Fetch terms from the database.
-class check extends config{
+//Check if a translation exists in the database.
+class check {
     //
     //Declare the vriables that compose a translation.
     public $translate_from;
     public $translate_to;
     public $synonym;
+    public $language_from;
+    public $language_to;
+    public $language_synonym;
     public $term;
     //
+    //Connection to database.
+    public $pdo;
+    //
     //Construct this class using the availed parameters.
-    function __construct ($translate_from, $translate_to, $synonym, $term) {
+    function __construct (
+        $translate_from, $translate_to, $synonym, 
+        $language_from, $language_to, $language_synonym,
+        $term, $pdo
+    ) {
         //
         $this->translate_from = $translate_from;
         $this->translate_to = $translate_to;
         $this->synonym = $synonym;
+        $this->language_from = $language_from;
+        $this->language_to = $language_to;
+        $this->language_synonym = $language_synonym;
         $this->term = $term;
+        //
+        $this->pdo = $pdo;
     }
     //
     //The main method.
     function execute(){
+        //
+        //Use the pdo connection established in the config file.
+        global $pdo;
         //
         //The results from interrogating the database.
         $translate_from = $this -> check_translate_from();
@@ -46,25 +67,11 @@ class check extends config{
         //
         //Check if there are links between words and a term.
         //
-        //Translation from + translation to + term
+        //Translations already exist in the database.
         if(
             $translate_from === true && 
             $translate_to === true &&
             $synonym === true){
-                //
-                echo json_encode(
-                    [
-                        "success" => true,
-                        "data" => 'all'
-                    ]
-                );
-        }
-        //
-        //None.
-        elseif(
-            $translate_from !== true && 
-            $translate_to !== true &&
-            $synonym !== true){
                 //
                 echo json_encode(
                     [
@@ -74,7 +81,21 @@ class check extends config{
                 );
         }
         //
-        //Translation from only.
+        //Translation_from, translation_to and synonym don't exit in the database.
+        elseif(
+            $translate_from !== true && 
+            $translate_to !== true &&
+            $synonym !== true){
+                //
+                echo json_encode(
+                    [
+                        "success" => true,
+                        "data" => 'all'
+                    ]
+                );
+        }
+        //
+        //Translation_to and synonym in the database not in database.
         elseif(
             $translate_from === true && 
             $translate_to !== true &&
@@ -83,58 +104,16 @@ class check extends config{
                 echo json_encode(
                     [
                         "success" => true,
-                        "data" => 'translation_from'
+                        "data" => 'translation_to_synonym'
                     ]
                 );
         }
         //
-        //Translation to only.
+        //Translation_from and synonym not in the database.
         elseif(
             $translate_from !== true && 
             $translate_to === true &&
             $synonym !== true){
-                //
-                echo json_encode(
-                    [
-                        "success" => true,
-                        "data" => 'translation_to'
-                    ]
-                );
-        }
-        //
-        //Synonym only.
-        elseif(
-            $translate_from !== true && 
-            $translate_to !== true &&
-            $synonym === true){
-                //
-                echo json_encode(
-                    [
-                        "success" => true,
-                        "data" => 'synonym'
-                    ]
-                );
-        }
-        //
-        //Translation from + translation to.
-        elseif(
-            $translate_from === true && 
-            $translate_to == true &&
-            $synonym !== true){
-                //
-                echo json_encode(
-                    [
-                        "success" => true,
-                        "data" => 'translation_from_to'
-                    ]
-                );
-        }
-        //
-        //Translation from + synonym.
-        elseif(
-            $translate_from === true && 
-            $translate_to !== true &&
-            $synonym === true){
                 //
                 echo json_encode(
                     [
@@ -144,7 +123,49 @@ class check extends config{
                 );
         }
         //
-        //Translation to + synonym.
+        //Translation_from and translation_to not in the database.
+        elseif(
+            $translate_from !== true && 
+            $translate_to !== true &&
+            $synonym === true){
+                //
+                echo json_encode(
+                    [
+                        "success" => true,
+                        "data" => 'translation_from_to'
+                    ]
+                );
+        }
+        //
+        //Synonym not in the database.
+        elseif(
+            $translate_from === true && 
+            $translate_to == true &&
+            $synonym !== true){
+                //
+                echo json_encode(
+                    [
+                        "success" => true,
+                        "data" => 'synonym'
+                    ]
+                );
+        }
+        //
+        //Translation_to not in the database.
+        elseif(
+            $translate_from === true && 
+            $translate_to !== true &&
+            $synonym === true){
+                //
+                echo json_encode(
+                    [
+                        "success" => true,
+                        "data" => 'translation_to'
+                    ]
+                );
+        }
+        //
+        //Translation_from not in the database.
         elseif(
             $translate_from !== true && 
             $translate_to === true &&
@@ -153,7 +174,7 @@ class check extends config{
                 echo json_encode(
                     [
                         "success" => true,
-                        "data" => 'translation_to_synonym'
+                        "data" => 'translation_from'
                     ]
                 );
         }
@@ -169,15 +190,16 @@ class check extends config{
             FROM 
                 term
             INNER JOIN translation ON translation.term = term.term
-            LEFT JOIN definition ON definition.translation_id = translation.translation
+            LEFT JOIN definition ON definition.translation = translation.translation
             INNER JOIN language ON translation.language = language.language
             INNER JOIN synonym ON synonym.translation = translation.translation
             INNER JOIN word ON synonym.word = word.word
-            WHERE
-                word.name = '$this->translate_from' AND term.name = '$this->term'";
+            WHERE word.name = '$this->translate_from' 
+            AND term.name = '$this->term'
+            AND language.name = '$this->language_from'";
         //
         //Execute the query.
-        $statement = $this->connect()->query($query);
+        $statement = $this->pdo->query($query);
         //
         //Bring back the result.
         while ($row = $statement->fetchAll(PDO::FETCH_ASSOC)) {
@@ -203,15 +225,16 @@ class check extends config{
             FROM 
                 term
             INNER JOIN translation ON translation.term = term.term
-            LEFT JOIN definition ON definition.translation_id = translation.translation
+            LEFT JOIN definition ON definition.translation = translation.translation
             INNER JOIN language ON translation.language = language.language
             INNER JOIN synonym ON synonym.translation = translation.translation
             INNER JOIN word ON synonym.word = word.word
-            WHERE
-                word.name = '$this->translate_to' AND term.name = '$this->term'";
+            WHERE word.name = '$this->translate_to' 
+            AND term.name = '$this->term'
+            AND language.name = '$this->language_to'";
         //
         //Execute the query.
-        $statement = $this->connect()->query($query);
+        $statement = $this->pdo->query($query);
         //
         //Bring back the result.
         while ($row = $statement->fetchAll(PDO::FETCH_ASSOC)) {
@@ -234,18 +257,18 @@ class check extends config{
         $query = "SELECT DISTINCT
                     term.name AS object,
                     term.type AS category
-            FROM 
-                term
+            FROM term
             INNER JOIN translation ON translation.term = term.term
-            LEFT JOIN definition ON definition.translation_id = translation.translation
+            LEFT JOIN definition ON definition.translation = translation.translation
             INNER JOIN language ON translation.language = language.language
             INNER JOIN synonym ON synonym.translation = translation.translation
             INNER JOIN word ON synonym.word = word.word
-            WHERE
-                word.name = '$this->synonym' AND term.name = '$this->term'";
+            WHERE word.name = '$this->synonym' 
+            AND term.name = '$this->term'
+            AND language.name = '$this->language_synonym'";
         //
         //Execute the query.
-        $statement = $this->connect()->query($query);
+        $statement = $this->pdo->query($query);
         //
         //Bring back the result.
         while ($row = $statement->fetchAll(PDO::FETCH_ASSOC)) {
@@ -263,5 +286,9 @@ class check extends config{
 }
 //
 //Call the class.
-$check_class = new check($translate_from, $translate_to, $synonym, $term);
+$check_class = new check(
+    $translate_from, $translate_to, $synonym, 
+    $language_from, $language_to, $language_synonym,
+    $term, $pdo
+);
 $check_class->execute();

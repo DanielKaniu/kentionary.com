@@ -8,7 +8,7 @@ import { Check } from 'src/types/types';
 export class CheckService {
   //
   //The API URL.
-  public url: string = 'http://localhost/kenny_final/api/data/';
+  public url: string = 'http://localhost/kenny_final/api/check/';
   //
   constructor(
     //
@@ -23,6 +23,24 @@ export class CheckService {
         //
         //The API URL.
         this.url + 'check.php',
+        //
+        //The request body.
+        {values: values},
+        //
+        //Specifies the format in which to return data.
+        {responseType: 'json'}
+      );
+  }
+  //
+  //Check if the translations are associated with a term.
+  //
+  //In this case the user has not provided a synonym.
+  check_no_synonym(values: any){
+    //
+    return this.http.post<Check>(
+        //
+        //The API URL.
+        this.url + 'check_no_synonym.php',
         //
         //The request body.
         {values: values},

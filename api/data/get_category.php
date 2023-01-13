@@ -4,9 +4,12 @@
 include_once '../config.php';
 //
 //Fetch categories from the database.
-class category extends config{
+class category{
     //
     function get_category(){
+        //
+        //Use the pdo connection established in the config file.
+        global $pdo;
         //
         //The query that gets the data.
         $query = 'SELECT DISTINCT 
@@ -15,7 +18,7 @@ class category extends config{
                 WHERE term.type IS NOT NULL';
         //
         //Execute the query.
-        $statement = $this->connect()->query($query);
+        $statement = $pdo->query($query);
         //
         //Bring back the result.
         while ($row = $statement->fetchAll(PDO::FETCH_ASSOC)) {
