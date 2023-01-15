@@ -97,7 +97,8 @@ import { terms_snack_bar } from "../snackbar/snackbar";
         //Compile the term object.
         const term_object = {
             term: datum.object,
-            category: datum.category
+            category: datum.category,
+            new_term: false
         }
         //
         //Create the elements that will hold the terms.
@@ -157,7 +158,8 @@ import { terms_snack_bar } from "../snackbar/snackbar";
         //Get the values.
         const term: New_term = {
           term: this.term_control.value,
-          category: this.category_control.value
+          category: this.category_control.value,
+          new_term: true
         }
         //
         this.dialogRef.close(term);

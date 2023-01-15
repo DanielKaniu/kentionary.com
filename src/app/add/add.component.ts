@@ -246,10 +246,18 @@ export class AddComponent implements OnInit {
       //
       //Save the selected term globally.
       this.selected_term = result;
-      console.log(this.selected_term);
       //
-      //Check if the word and the term are linked.
-      this.check_and_save();
+      //Check if the user is creating a new term or not.
+      if(this.selected_term?.new_term === true){
+        //
+        //Save the new term in the database
+        this.save_new_term();
+      }
+      else{
+        //
+        //Check if the word and the term are linked.
+        this.check_and_save();
+      }
     });
   }
   //
@@ -724,6 +732,83 @@ export class AddComponent implements OnInit {
           this.open_snackbar('Hardly reachable zone');
           break;
       }
+    }
+  }
+  //
+  //Save the new term in the database
+  save_new_term(){
+    //
+    //Compile content of the word to translate from.
+    const translation_from: Word_to_save['word_from'] = {
+      language: this.language_one_control.value,
+      word: this.translate_from_control.value,
+      meaning: this.meaning_from_control.value,
+      sentence: this.sentence_from_control.value,
+    };
+    //
+    //Compile content of the word to translate to.
+    const translation_to = {
+      language: this.language_two_control.value,
+      word: this.translate_to_control.value,
+      meaning: this.meaning_to_control.value,
+      sentence: this.sentence_to_control.value,
+    };
+    //
+    //Compile content of the synonyms.
+    const synonym = {
+      language: this.language_three_control.value,
+      word: this.synonym_word_control.value,
+      meaning: this.synonym_meaning_control.value,
+      sentence: this.synonym_sentence_control.value,
+    };
+    //
+    //Compile the values.
+    const values: any = {
+      translation_from: translation_from,
+      translation_to: translation_to,
+      synonym: synonym,
+      term: this.selected_term,
+    };
+    //
+    //Check if a user is adding a new synonym.
+    //
+    //If the user is not adding a new synonym the add the translation from, translation to and synonym.
+    if (this.synonym_state === true) {
+      //
+      //Add the state of the synonyms to the values object with is to be passed to the server.
+      values.synonym_state = true;
+      //
+      //Save the synonym in the database, link it with the selected term.
+      this.save_service.save_new_term(values).subscribe(
+        //
+        //Get the server response.
+        (response) => {
+          //
+          //Check if the execution to the server is successful.
+          if (response.success === true) {
+            //
+            //Display a positive message.
+            this.open_snackbar('Successfully saved. Good job! 👏');
+          }
+          //
+          //Alert the user when unsuccessful.
+          else {
+            //
+            //Display a negative message.
+            this.open_snackbar('Saving translation failed! 😞');
+          }
+        }
+      );
+    }
+    //
+    //Otherwise add the translation from and translation to.
+    else{
+      //
+      //At this point the user doesn't have synonyms.
+      delete values.synonym;
+      //
+      //Add the state of the synonyms to the values object with is to be passed to the server.
+      values.synonym_state = false;
     }
   }
 }

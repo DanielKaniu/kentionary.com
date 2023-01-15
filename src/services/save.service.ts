@@ -32,4 +32,20 @@ export class SaveService {
         {responseType: 'json'}
       );
   }
+  //
+  //Save the translationsand link them with their respective terms.
+  save_new_term(values: any){
+    //
+    return this.http.post<Save_result>(
+        //
+        //The API URL.
+        this.url + 'save_new_term.php',
+        //
+        //The request body.
+        {values: values},
+        //
+        //Specifies the format in which to return data.
+        {responseType: 'json'}
+      );
+  }
 }

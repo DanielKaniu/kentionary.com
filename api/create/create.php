@@ -46,21 +46,31 @@ function create_word($word){
         VALUES ('$word', CURRENT_TIMESTAMP);";
     //
     //Execute the query.
-    $pdo->exec($query);  
+    if($pdo->exec($query)){
+        return true;
+    }
+    else{
+        return false;
+    }  
 }
 //
 //Create a new term which is provided by the user.
-function create_term($term){
+function create_term($term_name, $term_category){
     //
     //Use the pdo connection established in the config file.
     global $pdo;
     //
     //The query that gets the data.
-    $query = "INSERT INTO term(name, is_valid, created_at)
-        VALUES ('$term', 0, CURRENT_TIMESTAMP);";
+    $query = "INSERT INTO term(name, type, is_valid, created_at)
+        VALUES ('$term_name', '$term_category', 0, CURRENT_TIMESTAMP);";
     //
     //Execute the query.
-    $pdo->exec($query);  
+    if($pdo->exec($query)){
+        return true;
+    }
+    else{
+        return false;
+    }
 }
 //
 //Add both meaning and example in the database.

@@ -35,6 +35,7 @@ export interface Word_for_term {
 export interface New_term{
     term: string | null;
     category: string | null;
+    new_term: boolean;
 }
 //
 //The translations to save in the database.
