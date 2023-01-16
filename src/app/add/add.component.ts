@@ -7,6 +7,7 @@ import {
   Check,
   Language,
   New_term,
+  Selected_term,
   Word_for_term,
   Word_to_save,
 } from 'src/types/types';
@@ -37,7 +38,7 @@ export class AddComponent implements OnInit {
   step = 0;
   //
   //The term/object the user wants to translate.
-  selected_term?: New_term;
+  selected_term?: Selected_term | New_term;
   //
   //The word(s) to translate.
   translate_from_control = new FormControl('nyumba', Validators.required);
@@ -809,6 +810,28 @@ export class AddComponent implements OnInit {
       //
       //Add the state of the synonyms to the values object with is to be passed to the server.
       values.synonym_state = false;
+      //
+      //Save the synonym in the database, link it with the selected term.
+      this.save_service.save_new_term(values).subscribe(
+        //
+        //Get the server response.
+        (response) => {
+          //
+          //Check if the execution to the server is successful.
+          if (response.success === true) {
+            //
+            //Display a positive message.
+            this.open_snackbar('Successfully saved. Good job! 👏');
+          }
+          //
+          //Alert the user when unsuccessful.
+          else {
+            //
+            //Display a negative message.
+            this.open_snackbar('Saving translation failed! 😞');
+          }
+        }
+      );
     }
   }
 }

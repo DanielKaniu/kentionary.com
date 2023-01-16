@@ -1,1 +1,12 @@
-<p>translate works!</p>
+<form class="form_word">
+    <mat-form-field appearance="fill" class="input_word">
+      <mat-label>Enter word to translate</mat-label>
+      <input class="input_word" matInput placeholder="E.g., home" [formControl]="word_control">
+    </mat-form-field><br>
+    <button mat-raised-button color="accent" (click)="translate()">Translate</button>
+</form>
+<div #translation_display *ngFor="let translation of translations">
+    <div *ngFor="let one of translation">
+        {{ one }}
+    </div>
+</div>

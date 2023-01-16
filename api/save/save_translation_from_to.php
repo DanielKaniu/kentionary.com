@@ -11,22 +11,22 @@ function save_translation_from_to($translation_to, $translation_from, $synonym, 
     //The words to add in the database.
     $word_from = $translation_from['word'];
     $word_to = $translation_to['word'];
-    $word_synonym = $synonym['word']; 
+    @$word_synonym = $synonym['word']; 
     //
     //The words' ids.
     $word_from_id = get_word_id($word_from)['data'];
     $word_to_id = get_word_id($word_to)['data'];
-    $word_synonym_id = get_word_id($word_synonym)['data'];
+    @$word_synonym_id = get_word_id($word_synonym)['data'];
     //
     //The words' language.
     $language_from = $translation_from['language'];
     $language_to = $translation_to['language'];
-    $language_synonym = $synonym['language'];
+    @$language_synonym = $synonym['language'];
     //
     //The languages' id.
     $language_from_id = get_language_id($language_from)['data'];
     $language_to_id = get_language_id($language_to)['data'];
-    $language_synonym_id = get_language_id($language_synonym)['data'];
+    @$language_synonym_id = get_language_id($language_synonym)['data'];
     //
     //The term to link with a word.
     $term_from = $term['term'];
@@ -37,12 +37,12 @@ function save_translation_from_to($translation_to, $translation_from, $synonym, 
     //The meanings of the word.
     $meaning_from = $translation_from['meaning'];
     $meaning_to = $translation_to['meaning'];
-    $meaning_synonym = $synonym['meaning'];
+    @$meaning_synonym = $synonym['meaning'];
     //
     //The example sentences.
     $example_from = $translation_from['sentence'];
     $example_to = $translation_to['sentence'];
-    $example_synonym = $synonym['sentence'];
+    @$example_synonym = $synonym['sentence'];
     //
     //Check if the word already exists in the database.
     $state_from = check_if_word_exists($word_from);

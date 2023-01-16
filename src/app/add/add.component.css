@@ -9,3 +9,7 @@ mat-form-field{
     margin-left: 10%;
     width: 35%;
 }
+
+mat-icon{
+    margin-left: 5%;
+}

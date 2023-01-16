@@ -6,7 +6,7 @@ include_once '../create/create.php';
 include_once '../data/get_ids.php';
 //
 //Save the word to translate from.
-function save_all($translation_to, $translation_from, $synonym, $term){
+function save_all_term_synonym($translation_to, $translation_from, $synonym, $term_id){
     //
     //The words to add in the database.
     $word_from = $translation_from['word'];
@@ -28,12 +28,6 @@ function save_all($translation_to, $translation_from, $synonym, $term){
     $language_to_id = get_language_id($language_to)['data'];
     $language_synonym_id = get_language_id($language_synonym)['data'];
     //
-    //The term to link with a word.
-    $term_from = $term['term'];
-    //
-    //The term's id.
-    $term_id = get_term_id($term_from)['data'];
-    //
     //The meanings of the word.
     $meaning_from = $translation_from['meaning'];
     $meaning_to = $translation_to['meaning'];
@@ -51,7 +45,7 @@ function save_all($translation_to, $translation_from, $synonym, $term){
     //
     //After checking if word exists in the word table, proceed accordingly.
     //
-    //In this case, the word to translate from and the synonym exist in the database.
+    //In this case, both the word to translate from and the synonym exist in the database.
     if ($state_from === true && $state_to === true && $state_synonym === true) {
             //
             //1. Create the required translation and synonym (for the word to translate from).

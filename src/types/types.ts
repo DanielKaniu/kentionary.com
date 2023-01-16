@@ -35,6 +35,14 @@ export interface Word_for_term {
 export interface New_term{
     term: string | null;
     category: string | null;
+    meaning: string | null;
+    new_term: boolean;
+}
+//
+//The term the user creates when s/he doesn't find a term of choice.
+export interface Selected_term{
+    term: string | null;
+    category: string | null;
     new_term: boolean;
 }
 //
@@ -71,4 +79,15 @@ export interface Check {
 //The results after successfully saving a translation.
 export interface Save_result{
     success: boolean;
+    data: {
+        result: string;
+    }
+}
+//
+//The translation.
+export interface Translation {
+    success: boolean;
+    data: {
+        word: string;
+    }
 }

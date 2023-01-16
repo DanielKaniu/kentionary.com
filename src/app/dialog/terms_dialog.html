@@ -26,6 +26,14 @@
     </mat-error> </mat-form-field
   ><br />
 
+  <mat-form-field appearance="fill">
+    <mat-label>Enter meaning in English</mat-label>
+    <textarea matInput [formControl]="meaning_term_control"></textarea>
+    <mat-error *ngIf="meaning_term_control.hasError('required')">
+      Meaning is <strong>required</strong>
+    </mat-error>
+  </mat-form-field><br>
+
   <i>E.g home + noun = <b><u>home (noun)</u></b></i>
 </div>
 

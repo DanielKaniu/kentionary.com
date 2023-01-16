@@ -2,13 +2,9 @@
 //
 //Bring in the necessary files.
 include_once '../config.php';
-include_once 'save_term_synonym.php';
-include_once 'save_translation_from.php';
-include_once 'save_translation_to.php';
-include_once 'save_synonym.php';
-//
-//
-
+include_once 'save_term_word.php';
+include_once 'save_all_term_synonym.php';
+include_once 'save_from_to_term_no_synonym.php';
 //
 //Get the data on the request body;
 $data = json_decode(file_get_contents('php://input'), 1);
@@ -17,7 +13,7 @@ $word = $data['values'];
 //Get the components of the translation from object.
 $translation_from = $word['translation_from'];
 $translation_to = $word['translation_to'];
-$synonym = $word['synonym'];
+@$synonym = $word['synonym'];
 $term = $word['term'];
 $synonym_state = $word['synonym_state'];
 //
@@ -56,28 +52,37 @@ class save_new_term {
         //Check if the user has provided some synonyms.
         if ($this->synonym_state === true) {
             //
+            //Get the term's name.
+            $term_name = $this->term['term'];
+            //
             //First add the new term to the database.
-            save_term_synonym($this->translation_to, $this->translation_from, $this->synonym, $this->term);
+            save_term_word($this->translation_to, $this->translation_from, $this->term);
             //
-            //Save the word to translate from.
-            $save = save_translation_from(
-                $this->translation_from, $this->translation_to, $this->synonym, $this->term
-            );
+            //Get the newly created term's id.
+            $term_id = get_term_id($term_name)['data'];
             //
-            //Save the word to translate to.
-            save_translation_to(
-                $this->translation_to, $this->translation_from, $this->synonym, $this->term
-            );
-            //
-            //Save the synonym.
-            save_synonym(
-                $this->translation_to, $this->translation_from, $this->synonym, $this->term
+            //Save the translation from, translation to and the synonym.
+            save_all_term_synonym(
+                $this->translation_to, $this->translation_from, $this->synonym, $term_id
             );
         }
         //
         //At this point there no synonyms provided.
         else{
-            echo 'nosy';
+            //
+            //Get the term's name.
+            $term_name = $this->term['term'];
+            //
+            //First add the new term to the database.
+            save_term_word($this->translation_to, $this->translation_from, $this->term);
+            //
+            //Get the newly created term's id.
+            $term_id = get_term_id($term_name)['data'];
+            //
+            //Save the translation from and the translation to.
+            save_from_to_term_no_synonym(
+                $this->translation_to, $this->translation_from, $term_id
+            );
         } 
     }
 }

@@ -1,0 +1,13 @@
+/*
+Style the form. */
+.form_word{
+    width: 100%;
+}
+
+.input_word{
+    width: 60%;
+}
+
+mat-divider{
+    width: 30vw;
+}

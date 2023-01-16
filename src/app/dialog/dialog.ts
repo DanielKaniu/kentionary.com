@@ -5,7 +5,7 @@ import { FormControl, Validators } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { TermService } from "src/services/term.service";
-import { Category, New_term, Term } from "src/types/types";
+import { Category, New_term, Selected_term, Term } from "src/types/types";
 import { terms_snack_bar } from "../snackbar/snackbar";
 
 //The dialog for terms.
@@ -26,12 +26,13 @@ import { terms_snack_bar } from "../snackbar/snackbar";
     //The form controls.
     term_control = new FormControl('', Validators.required);
     category_control = new FormControl('', Validators.required);
+    meaning_term_control = new FormControl('', Validators.required);
     //
     //The terms.
     terms?: Array<Term['data']>;
     //
     //The term for which the user wants to add a translation.
-    selected_term?: New_term;
+    selected_term?: Selected_term;
     //
     //The term the user creates when s/he doesn't find a term of choice.
     new_term?: New_term;
@@ -147,7 +148,8 @@ import { terms_snack_bar } from "../snackbar/snackbar";
       //Ensure the user provides values, not to create empty term.
       if(
         this.term_control.value === '' ||
-        this.category_control.value === ''
+        this.category_control.value === '' ||
+        this.meaning_term_control.value === ''
       ){
         //
         //Alert the user.
@@ -159,6 +161,7 @@ import { terms_snack_bar } from "../snackbar/snackbar";
         const term: New_term = {
           term: this.term_control.value,
           category: this.category_control.value,
+          meaning: this.meaning_term_control.value,
           new_term: true
         }
         //
