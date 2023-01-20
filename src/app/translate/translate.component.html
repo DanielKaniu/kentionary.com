@@ -1,12 +1,34 @@
-<form class="form_word">
-    <mat-form-field appearance="fill" class="input_word">
-      <mat-label>Enter word to translate</mat-label>
-      <input class="input_word" matInput placeholder="E.g., home" [formControl]="word_control">
-    </mat-form-field><br>
-    <button mat-raised-button color="accent" (click)="translate()">Translate</button>
-</form>
-<div #translation_display *ngFor="let translation of translations">
-    <div *ngFor="let one of translation">
-        {{ one }}
+<div id="main">
+  <div id="form">
+    <form class="form_word">
+      <mat-form-field appearance="fill" class="input_word">
+        <mat-label>Enter word to translate</mat-label>
+        <input
+          id="input_word"
+          matInput
+          placeholder="E.g., home"
+          [formControl]="word_control"
+        /> </mat-form-field
+      ><br />
+      <button mat-raised-button color="accent" (click)="translate()">
+        Translate
+      </button>
+    </form>
+  </div>
+
+  <div id="translation_container">
+    <div id="left_panel" class="panels">
+      <div *ngFor="let language of languages_panel">
+        <span id="language">{{ language }}</span>
+      </div>
     </div>
+    <div id="content"  class="panels">
+      <div #tr *ngFor="let translation of translations" >
+            <span id="term">{{ translation.term }} </span>
+            <span id="languages">{{ translation.language }} </span>
+            <span id="word">{{ translation.words }}</span>
+      <br />
+      </div>
+  </div>
+  <div id="right_panel"  class="panels"></div>
 </div>

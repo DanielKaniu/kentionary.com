@@ -88,6 +88,6 @@ export interface Save_result{
 export interface Translation {
     success: boolean;
     data: {
-        word: string;
+        word?: string;
     }
 }
