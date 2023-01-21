@@ -1,5 +1,7 @@
 <div id="main">
   <div id="form">
+    <img id="logo_main" src="../../assets/images/kenny.png" alt="Kentionary's Logo">
+    <div id="tagline">Translate Kenya</div>
     <form class="form_word">
       <mat-form-field appearance="fill" class="input_word">
         <mat-label>Enter word to translate</mat-label>
@@ -10,25 +12,91 @@
           [formControl]="word_control"
         /> </mat-form-field
       ><br />
-      <button mat-raised-button color="accent" (click)="translate()">
+      <button mat-raised-button color="accent" (click)="translate()" id="translate">
         Translate
       </button>
     </form>
   </div>
 
-  <div id="translation_container">
-    <div id="left_panel" class="panels">
-      <div *ngFor="let language of languages_panel">
-        <span id="language">{{ language }}</span>
+  <div [hidden]="is_translate">
+    <div id="translation_container" [hidden]="is_translate">
+      <div id="left_panel">
+        <div *ngFor="let language of languages_panel" [hidden]="!is_new">
+          <span id="language">{{ language }}</span>
+        </div>
       </div>
-    </div>
-    <div id="content"  class="panels">
-      <div #tr *ngFor="let translation of translations" >
-            <span id="term">{{ translation.term }} </span>
-            <span id="languages">{{ translation.language }} </span>
-            <span id="word">{{ translation.words }}</span>
-      <br />
+      <div id="content">
+        <div [hidden]="is_new">
+          Translation not available. <br>
+          <button mat-raised-button color="primary" (click)="add_new_translation()">
+            Add new translation
+          </button>
+        </div>
+        <div *ngFor="let translation of translations" [hidden]="!is_new">
+              <span id="term">{{ translation.term }} </span>
+              <span id="languages">{{ translation.language }} </span>
+              <span id="word">{{ translation.words }}</span>
+        <br />
+        </div>
       </div>
+    <div id="right_panel"  class="panels"></div>
   </div>
-  <div id="right_panel"  class="panels"></div>
 </div>
+
+
+<h2>National Anthem</h2>
+<div id="national_anthem">
+  <pre id="swahili_anthem">
+    <span class="anthem_language"> Swahili </span>
+    Ee Mungu nguvu yetu
+    Ilete baraka kwetu
+    Haki iwe ngao na mlinzi
+    Natukae na udugu
+    Amani na uhuru
+    Raha tupate na ustawi. <br>
+    Amkeni ndugu zetu
+    Tufanye sote bidii
+    Nasi tujitoe kwa nguvu
+    Nchi yetu ya
+    Kenya tunayoipenda
+    Tuwe tayari kuilinda. <br>
+    Natujenge taifa letu
+    Ee ndio wajibu wetu
+    Kenya istahili heshima
+    Tuungane mikono pamoja kazini
+    Kila siku tuwe nashukrani. 
+  </pre>
+
+  <pre id="english_anthem">
+    <span class="anthem_language"> English </span>
+    O God of all creation,
+    Bless this our land and nation.
+    Justice be our shield and defender,
+    May we dwell in unity,
+    Peace and liberty.
+    Plenty be found within our borders. <br>
+    Let one and all arise
+    With hearts both strong and true.
+    Service be our earnest endeavor,
+    And our Homeland of Kenya,
+    Heritage of splendor,
+    Firm may we stand to defend. <br>
+    Let all with one accord
+    In common bond united,
+    Build this our nation together,
+    And the glory of Kenya,
+    The fruit of our labor
+    Fill every heart with thanksgiving. 
+  </pre>
+</div>
+
+
+<button 
+  routerLink="/add" 
+  mat-mini-fab color="primary" 
+  id="add_new_translation" 
+  matTooltip="Add a new translation"
+  matTooltipPosition="left"
+  aria-label="Button with a add icon">
+    <mat-icon>add</mat-icon>
+</button>

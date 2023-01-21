@@ -1,1 +1,29 @@
-<router-outlet></router-outlet>
+<mat-drawer-container id="sidenav_container" autosize>
+    <mat-drawer #drawer id="sidenav" mode="side" mode="side">
+      <div id="sidenav_logo_container">
+        <img id="logo_sidenav" src="../../assets/images/kenny.png" alt="Kentionary's Logo">
+        <div id="title_sidenav">KENTIONARY INC.</div>
+        <div id="tagline">Translate Kenya</div>
+      </div>
+
+      <a routerLink="/translate">Translate</a>
+      <a routerLink="/add">Add new translation</a>
+      <a href="">About Us </a>
+      <a href="">Contact Us</a>
+      <a href="">Provide Support</a>
+
+      <div id="copyright">© 2023 Kentionary, Inc.</div>
+    </mat-drawer>
+  
+    <div id="sidenav_content">
+      <button 
+        mat-mini-fab color="primary" 
+        aria-label="Button with a menu icon" 
+        (click)="drawer.toggle()"
+        id="menu">
+          <mat-icon>menu</mat-icon>
+      </button>
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-container>
+  

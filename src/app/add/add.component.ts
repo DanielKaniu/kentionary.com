@@ -18,6 +18,9 @@ import { terms_dialog } from '../dialog/dialog';
 import { CheckService } from 'src/services/check.service';
 import { SaveService } from 'src/services/save.service';
 //
+//To get the query parameters passed from the translate component.
+import { ActivatedRoute } from '@angular/router';
+//
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
@@ -25,11 +28,6 @@ import { SaveService } from 'src/services/save.service';
 })
 //
 export class AddComponent implements OnInit {
-  //
-  //Get the expansion panels.
-  @ViewChild('exp_one') exp_one!: ElementRef;
-  @ViewChild('exp_two') exp_two!: ElementRef;
-  @ViewChild('exp_three') exp_three!: ElementRef;
   //
   //Show/hide the expansion panels.
   is_disabled?: boolean = true;
@@ -41,15 +39,15 @@ export class AddComponent implements OnInit {
   selected_term?: Selected_term | New_term;
   //
   //The word(s) to translate.
-  translate_from_control = new FormControl('nyumba', Validators.required);
-  translate_to_control = new FormControl('home', Validators.required);
+  translate_from_control = new FormControl('', Validators.required);
+  translate_to_control = new FormControl('', Validators.required);
   //
   //Example sentence(s).
   sentence_to_control = new FormControl();
   sentence_from_control = new FormControl();
   //
   //Synonym(s) form control.
-  synonym_word_control = new FormControl('mucii', Validators.required);
+  synonym_word_control = new FormControl('', Validators.required);
   synonym_meaning_control = new FormControl(
     'handu ha guikara',
     Validators.required
@@ -57,22 +55,16 @@ export class AddComponent implements OnInit {
   synonym_sentence_control = new FormControl('', Validators.required);
   //
   //Language form control.
-  language_one_control = new FormControl('Swahili', Validators.required);
-  language_two_control = new FormControl('English', Validators.required);
-  language_three_control = new FormControl('Gikuyu', Validators.required);
+  language_one_control = new FormControl('', Validators.required);
+  language_two_control = new FormControl('', Validators.required);
+  language_three_control = new FormControl('', Validators.required);
   //
   //Meaning form control.
-  meaning_from_control = new FormControl(
-    'pahali pa kuishi',
-    Validators.required
-  );
-  meaning_to_control = new FormControl(
-    'a place to live in',
-    Validators.required
-  );
+  meaning_from_control = new FormControl('', Validators.required);
+  meaning_to_control = new FormControl('', Validators.required);
   //
   //Category form control.
-  category_control = new FormControl('noun', Validators.required);
+  category_control = new FormControl('', Validators.required);
   //
   //The list of languages, from the database.
   languages?: Array<Language['data']>;
@@ -92,10 +84,10 @@ export class AddComponent implements OnInit {
   constructor(
     //
     //The language service.
-    public language_service: LanguageService,
+    private language_service: LanguageService,
     //
     //The category service.
-    public category_service: CategoryService,
+    private category_service: CategoryService,
     //
     //The service that checks if the translations are linked to  a term.
     private check_service: CheckService,
@@ -104,13 +96,25 @@ export class AddComponent implements OnInit {
     private save_service: SaveService,
     //
     //The dialog box.
-    public dialog: MatDialog,
+    private dialog: MatDialog,
     //
     //The snackbar.
-    public _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    //
+    //To help get the query parameters on the current URL.
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    //
+    //Get the query parameter.
+    this.route.queryParams.subscribe(
+      params => {
+        //
+        //Set the value of the word to translate from.
+        this.translate_from_control.setValue(params['word']);
+      }
+    );
     //
     //Retrieve the list of languages from the database
     this.language_service.get_language().subscribe(

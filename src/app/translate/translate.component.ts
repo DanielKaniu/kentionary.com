@@ -1,19 +1,29 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import { TranslateService } from 'src/services/translate.service';
 import { Translation } from 'src/types/types';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { terms_snack_bar } from '../snackbar/snackbar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-translate',
   templateUrl: './translate.component.html',
   styleUrls: ['./translate.component.css']
 })
-export class TranslateComponent implements OnInit, AfterViewInit  {
+export class TranslateComponent implements OnInit  {
   //
+  //The state to control adding a new translation.
+  is_new: boolean = true;
   //
-  @ViewChild('tr') t?: ElementRef<HTMLDivElement>;
+  //The state to control when the user wants to translate.
+  is_translate: boolean = true;
+  //
+  //The state to control displaying the translations.
+  is_translated: boolean = true;
+  //
+  //The word to translate.
+  word?: string | null;
   //
   //The word to translate.
   word_control = new FormControl('mucii', Validators.required);
@@ -33,20 +43,21 @@ export class TranslateComponent implements OnInit, AfterViewInit  {
     private translate_service: TranslateService,
      //
     //The snackbar.
-    public _snackBar: MatSnackBar
+    public _snackBar: MatSnackBar,
+    //
+    //The router.
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     // this.translate();
   }
-
-  ngAfterViewInit(): void {
-    // console.log(this.t?.nativeElement.innerHTML);
-  }
-
   //
   //Get the translation.
   translate(): void{
+    //
+    //Show the translation panel.
+    this.is_translate = false;
     //
     //The input field.
     const input = document.getElementById('input_word') as HTMLInputElement;
@@ -58,10 +69,10 @@ export class TranslateComponent implements OnInit, AfterViewInit  {
     if (input.value !== '') {
         //
         //Get the word to translate.
-        const word: string | null = this.word_control.value;
+        this.word = this.word_control.value;
         //
         //Send the word to translate to the server.
-        this.translate_service.get_translation(word).subscribe(
+        this.translate_service.get_translation(this.word).subscribe(
           //
           //Get some response from the server.
           (response: any) => {
@@ -74,6 +85,9 @@ export class TranslateComponent implements OnInit, AfterViewInit  {
             //At this point there are some results.
             if (response.success === true) {
               //
+              //Show the translations.
+              this.is_new = true;
+              //
               //Empty the translations array.
               this.translations = [];
               this.languages = [];
@@ -85,24 +99,10 @@ export class TranslateComponent implements OnInit, AfterViewInit  {
             //At this point there is no result.
             else {
               //
-              //Get all panels.
-              const panels = document.querySelectorAll('.panels');
+              //Make the elements for asking the user if to add a new translation or not.
+              this.is_new = false;
               //
-              //Loop through each panel.
-              panels.forEach((panel) => {
-                //
-                //Clear all panels.
-                panel.innerHTML = '';
-              });
-              //
-              //Prompt the user to add a new translation.
-              const req = `
-                The translation you searched is not found, would you like to translate it?
-              `;
-              //
-              //Get the content panel and attach the prompt to it.
-              const content = document.getElementById('content');
-              content!.innerText =req;
+              //Get the other pan
             }
           }
         );
@@ -150,6 +150,30 @@ export class TranslateComponent implements OnInit, AfterViewInit  {
     //
     //Ensure the languages are unique and there is no repetition.
     this.languages_panel = [...new Set(this.languages)];
+  }
+  //
+  //Allow the user create a new translation.
+  add_new_translation(): void{
+    //
+    //The input field.
+    const input = document.getElementById('input_word') as HTMLInputElement;
+    //
+    //First check if the input field has a value.
+    if(input.value !== ''){
+      //
+      //Open the page that lets the user add a new translation.
+      this.router.navigate(
+        ['/add'], 
+        { queryParams: {word: this.word}}  
+      );
+    }
+    //
+    //At this point the input field is empty.
+    else{
+      //
+      //Open the page that lets the user add a new translation.
+      this.router.navigate(['/add']);
+    }
   }
   //
   //Display the snackbar accordingly.

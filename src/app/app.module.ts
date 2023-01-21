@@ -23,7 +23,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import {MatButtonModule} from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import {MatButtonModule} from '@angular/material/button';
     MatDividerModule,
     MatDialogModule,
     MatSnackBarModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSidenavModule
   ],
   exports: [RouterModule],
   providers: [],

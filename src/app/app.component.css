@@ -1,0 +1,59 @@
+/*
+The sidenav. */
+#sidenav_container{
+    height: 100%;
+}
+#sidenav_content{
+    height: 100%;
+    justify-content: center;
+}
+#sidenav{
+    width: 15%;
+}
+/*
+The sidenav menu button. */
+#menu{
+    position: absolute;
+    left: 2%;
+    top: 2%;
+}
+/*
+The sidenav's logo. */
+#sidenav_logo_container{
+    text-align: center;
+    margin-bottom: 20%;
+}
+#logo_sidenav{
+    width: 50%;
+    text-align: center;
+    margin-top: 8%;
+}
+#tagline{
+    font-style: italic;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+/*
+The sidenav's title. */
+#title_sidenav{
+    font-size: larger;
+    font-weight: 900;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+/*
+The links in the sidenav. */
+a{
+    display: block;
+    text-decoration: none;
+    font-weight: 500;
+    margin-top: 10%;
+    margin-left: 6%;
+}
+a::hover{
+    cursor: pointer;
+}
+#copyright{
+    position: fixed;
+    bottom: 0;
+    left: 2%;
+}

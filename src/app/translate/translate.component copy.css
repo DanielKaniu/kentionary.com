@@ -2,15 +2,11 @@
 The main page's logo. */
 #logo_main{
     width: 10%;
-}
-#tagline{
-    font-style: italic;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    margin-bottom: 3%;
+    margin-bottom: 5%;
 }
 /* width */
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 15px;
   }
   
   /* Track */
@@ -31,13 +27,13 @@ The main page's logo. */
   }
 
 #form{
-    margin-top: 2%;
     text-align: center;
 }
 /*
 The container for the translations. */
 #translation_container{
-    height: 80vh;display: grid;
+    height: 80vh;
+    display: grid;
     grid-template-rows: 50px 1fr 30px;
     grid-template-columns: 1fr 3fr 2fr;
     gap: 10px;
@@ -49,9 +45,10 @@ The container for the translations. */
 /*
 The panel holding the category. */
 #left_panel{
-    grid-area: a;
     background: rgb(79, 75, 75);
     color: antiquewhite;
+    grid-area: a;
+    margin-left: 3%;
     padding-top: 50%;
     font-weight: 500;
     text-align: center;
@@ -60,9 +57,9 @@ The panel holding the category. */
 /*
 The panel for the translations. */
 #content{
-    grid-area: b;
     background: rgb(255, 134, 134);
     color: rgb(0, 0, 0);
+    grid-area: b;
     border-radius: 2%;
     overflow-y: auto;
     padding-top: 3%;
@@ -70,8 +67,8 @@ The panel for the translations. */
     border-radius: 2% / 30%;
 }
 #right_panel{
-    grid-area: c;
     background: rgb(120, 255, 120);
+    grid-area: c;
     border-radius: 4%;
     margin-right: 3%;
     border-radius: 100px 10px / 120px;
@@ -105,22 +102,12 @@ The translations. */
 /*
 The national anthem. */
 #national_anthem{
-    display: flex;
-    justify-content: center;
+    /* display: flex;
+    justify-content: center; */
 }
 h2{
     text-align: center;
 }
-#swahili_anthem,#english_anthem{
-    width: 30%;
-}
 .anthem_language{
     font-weight: 900;
-}
-/*
-The link to navigate to the page for adding a new translation. */
-#add_new_translation{
-    position: fixed;
-    bottom: 3%;
-    right: 3%;
 }
