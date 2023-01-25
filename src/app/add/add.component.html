@@ -25,7 +25,7 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>Word</mat-label>
+      <mat-label>Word in {{ language_one_control.value }}</mat-label>
       <input type="text" matInput [formControl]="translate_from_control" />
       <mat-error *ngIf="translate_from_control.hasError('required')">
         A word is <strong>required</strong>
@@ -34,7 +34,7 @@
     <br />
 
     <mat-form-field appearance="fill">
-      <mat-label>Enter meaning in ...</mat-label>
+      <mat-label>Enter meaning in {{ language_one_control.value }}</mat-label>
       <textarea matInput [formControl]="meaning_from_control"></textarea>
       <mat-error *ngIf="meaning_from_control.hasError('required')">
         Meaning is <strong>required</strong>
@@ -42,7 +42,7 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>Example sentence in ...</mat-label>
+      <mat-label>Example sentence in {{ language_one_control.value }}</mat-label>
       <input type="text" matInput [formControl]="sentence_from_control" />
     </mat-form-field>
     <br /><mat-divider></mat-divider><br>
@@ -63,7 +63,7 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>Word</mat-label>
+      <mat-label>Word in {{ language_two_control.value }}</mat-label>
       <input type="text" matInput [formControl]="translate_to_control" />
       <mat-error *ngIf="translate_to_control.hasError('required')">
         A word is <strong>required</strong>
@@ -71,7 +71,7 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>Enter meaning in ...</mat-label>
+      <mat-label>Enter meaning in {{ language_two_control.value }}</mat-label>
       <textarea matInput [formControl]="meaning_to_control"></textarea>
       <mat-error *ngIf="meaning_to_control.hasError('required')">
         Meaning is <strong>required</strong>
@@ -79,7 +79,7 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>Example sentence in ...</mat-label>
+      <mat-label>Example sentence in {{ language_two_control.value }}</mat-label>
       <input type="text" matInput [formControl]="sentence_to_control" />
     </mat-form-field><br />
 
@@ -98,7 +98,7 @@
 
 
     <mat-action-row>
-      <button mat-button color="primary" (click)="nextStep()">Next</button>
+      <button class="next" mat-button color="accent" (click)="nextStep()">Next</button>
     </mat-action-row>
   </mat-expansion-panel>
   <!-- 
@@ -128,7 +128,7 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>Word</mat-label>
+      <mat-label>Word in {{ language_three_control.value }}</mat-label>
       <input type="text" matInput [formControl]="synonym_word_control" />
       <mat-error *ngIf="synonym_word_control.hasError('required')">
         A word is <strong>required</strong>
@@ -137,7 +137,7 @@
     <br />
 
     <mat-form-field appearance="fill">
-      <mat-label>Enter meaning in ...</mat-label>
+      <mat-label>Enter meaning in {{ language_three_control.value }}</mat-label>
       <textarea matInput [formControl]="synonym_meaning_control"></textarea>
       <mat-error *ngIf="synonym_meaning_control.hasError('required')">
         Meaning is <strong>required</strong>
@@ -145,13 +145,13 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>Example sentence in ...</mat-label>
+      <mat-label>Example sentence in {{ language_three_control.value }}</mat-label>
       <input type="text" matInput [formControl]="synonym_sentence_control" />
     </mat-form-field>
 
     <mat-action-row>
-      <button mat-button color="warn" (click)="prevStep()">Previous</button>
-      <button mat-button color="primary" (click)="nextStep()">Save</button>
+      <button class="prev" mat-button color="warn" (click)="prevStep()">Previous</button>
+      <button class="next" mat-button color="primary" (click)="nextStep()">Save</button>
     </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>

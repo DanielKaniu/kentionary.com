@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "kentionary-247": {
+      "hosting": {
+        "kenny": [
+          "kentionary-247"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "kentionary-247"
+  }
+}

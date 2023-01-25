@@ -1,0 +1,32 @@
+#logo_div{
+    text-align: center;
+    margin-top: 1%;
+}
+#logo{
+    width: 7%;
+}
+#tagline{
+    font-style: italic;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    margin-bottom: 3%;
+}
+#four_four{
+    margin-top: 2%;
+    text-align: center;
+}
+#message{
+    margin-top: 1%;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1rem;
+}
+#one, #two, #three{
+    font-size: 4rem;
+    font-weight: 900;
+}
+#searching_div{
+    text-align: center;
+}
+#searching{
+    height: 20%;
+}

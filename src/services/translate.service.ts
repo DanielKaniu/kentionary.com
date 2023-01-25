@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+//
+//The path to the server.
+import { url } from './url';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TranslateService {
-  //
-  //The API URL.
-  public url: string = 'http://localhost/kenny_final/api/data/';
   //
   constructor(
     //
@@ -16,15 +16,18 @@ export class TranslateService {
   ) { }
   //
   //Get the list of categories from the database.
-  get_translation(word: string | null){
+  get_translation(word: string | null, language: string | null){
     //
     return this.http.post(
         //
         //The API URL.
-        this.url + 'get_translation.php',
+        url + 'data/get_translation.php',
         //
         //The word to translate.
-        {word: word},
+        {
+          word: word, 
+          language: language
+        },
         //
         //Specifies the format in which to return data.
         {responseType: 'json'}

@@ -2,14 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Check, Save_result } from 'src/types/types';
 //
+//The path to the server.
+import { url } from './url';
+//
 @Injectable({
   providedIn: 'root'
 })
 //
 export class SaveService {
-  //
-  //The API URL.
-  public url: string = 'http://localhost/kenny_final/api/save/';
   //
   constructor(
     //
@@ -23,7 +23,7 @@ export class SaveService {
     return this.http.post<Save_result>(
         //
         //The API URL.
-        this.url + 'save.php',
+        url + 'save/save.php',
         //
         //The request body.
         {values: values},
@@ -39,7 +39,7 @@ export class SaveService {
     return this.http.post<Save_result>(
         //
         //The API URL.
-        this.url + 'save_new_term.php',
+        url + 'save/save_new_term.php',
         //
         //The request body.
         {values: values},

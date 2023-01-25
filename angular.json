@@ -96,6 +96,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "kenny:build:production",
+            "firebaseProject": "kentionary-247",
+            "firebaseHostingSite": "kentionary-247"
+          }
         }
       }
     }

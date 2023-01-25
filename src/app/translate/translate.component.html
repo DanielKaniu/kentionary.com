@@ -1,24 +1,45 @@
 <div id="main">
   <div id="form">
     <img id="logo_main" src="../../assets/images/kenny.png" alt="Kentionary's Logo">
-    <div id="tagline">Translate Kenya</div>
+    <span id="company">KENTIONARY</span>
+    <div id="tagline">Translating Kenya</div>
     <form class="form_word">
-      <mat-form-field appearance="fill" class="input_word">
+      <mat-form-field appearance="outline">
+        <mat-label>Language</mat-label>
+        <mat-select  color="primary" [formControl]="language_control" required>
+          <mat-option *ngFor="let lang of select_languages" [value]="lang.name">
+            {{ lang.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="language_control.hasError('required')"
+          >Please choose a language</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="input_word" color="primary">
         <mat-label>Enter word to translate</mat-label>
         <input
           id="input_word"
           matInput
           placeholder="E.g., home"
           [formControl]="word_control"
-        /> </mat-form-field
+        /> 
+        <mat-error *ngIf="word_control.hasError('required')"
+          >Enter word to translate</mat-error
+        >
+        </mat-form-field
       ><br />
+
+      
+
       <button mat-raised-button color="accent" (click)="translate()" id="translate">
         Translate
       </button>
     </form>
   </div>
 
-  <div [hidden]="is_translate">
+  <!-- <div [hidden]="is_translate"> -->
+  <div [hidden]="false">
     <div id="translation_container" [hidden]="is_translate">
       <div id="left_panel">
         <div *ngFor="let language of languages_panel" [hidden]="!is_new">
@@ -39,15 +60,53 @@
         <br />
         </div>
       </div>
-    <div id="right_panel"  class="panels"></div>
+    <div id="right_panel"  class="panels">
+      <div id="title_stats">
+        <mat-icon id="chart_icon"> bubble_chart</mat-icon>
+        <span id="title_stats_text"> STATISTICS </span>
+      </div>
+      <div id="stats">
+        <div class="stat_dets"> 
+          <span 
+            class="stats" 
+            matBadge="{{ language_count }}" 
+            matBadgeOverlap="false"
+            matBadgePosition="before">
+              Languages translated 
+            <span class="example">E.g., Gikuyu</span>
+          </span>
+        </div>
+        <div class="stat_dets"> 
+          <span 
+            class="stats" 
+            matBadge="{{ word_count }}" 
+            matBadgeOverlap="false"
+            matBadgePosition="before">
+              Words translated 
+              <span class="example">E.g., home</span>
+          </span>
+        </div>
+        <div class="stat_dets"> 
+          <span 
+            class="stats" 
+            matBadge="{{ term_count }}" 
+            matBadgeOverlap="false"
+            matBadgePosition="before">
+              Terms translated 
+              <span class="example">E.g., country (noun)</span>
+          </span>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
 
-<h2>National Anthem</h2>
+<h2>Kenya National Anthem</h2>
 <div id="national_anthem">
   <pre id="swahili_anthem">
     <span class="anthem_language"> Swahili </span>
+
     Ee Mungu nguvu yetu
     Ilete baraka kwetu
     Haki iwe ngao na mlinzi
@@ -69,6 +128,7 @@
 
   <pre id="english_anthem">
     <span class="anthem_language"> English </span>
+    
     O God of all creation,
     Bless this our land and nation.
     Justice be our shield and defender,
@@ -89,14 +149,3 @@
     Fill every heart with thanksgiving. 
   </pre>
 </div>
-
-
-<button 
-  routerLink="/add" 
-  mat-mini-fab color="primary" 
-  id="add_new_translation" 
-  matTooltip="Add a new translation"
-  matTooltipPosition="left"
-  aria-label="Button with a add icon">
-    <mat-icon>add</mat-icon>
-</button>

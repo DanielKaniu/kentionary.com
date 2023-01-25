@@ -13,3 +13,27 @@ mat-form-field{
 mat-icon{
     margin-left: 5%;
 }
+.next{
+    margin-right: 10%;
+    background: rgb(150, 113, 89);
+    color: white;
+}
+.prev{
+    background-color: rgb(204, 175, 156);
+    color: rgb(255, 255, 255);
+}
+/*
+Style for tablet devices. */
+@media only screen and (max-width: 768px) {
+    
+}
+/*
+Style for mobile devices. */
+@media only screen and (max-width: 480px) {
+    /*
+    Style the form field. */
+    mat-form-field{
+        margin-left: 10%;
+        width: 70%;
+    }
+}

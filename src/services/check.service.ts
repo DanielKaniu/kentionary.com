@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Check } from 'src/types/types';
+//
+//The path to the server.
+import { url } from './url';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CheckService {
-  //
-  //The API URL.
-  public url: string = 'http://localhost/kenny_final/api/check/';
   //
   constructor(
     //
@@ -22,7 +22,7 @@ export class CheckService {
     return this.http.post<Check>(
         //
         //The API URL.
-        this.url + 'check.php',
+        url + 'check/check.php',
         //
         //The request body.
         {values: values},
@@ -40,7 +40,7 @@ export class CheckService {
     return this.http.post<Check>(
         //
         //The API URL.
-        this.url + 'check_no_synonym.php',
+        url + 'check/check_no_synonym.php',
         //
         //The request body.
         {values: values},

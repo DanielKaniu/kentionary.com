@@ -5,9 +5,10 @@ include_once '../config.php';
 //
 $data = json_decode(file_get_contents('php://input'), 1);
 $word = $data['word'];
+$language = $data['language'];
 //
 //Translate the word provided by the user.
-function get_language($word){
+function get_language($word, $language){
     //
     //Use the pdo connection established in the config file.
     global $pdo;
@@ -33,8 +34,10 @@ function get_language($word){
                     FROM word
                     INNER JOIN synonym on synonym.word = word.word
                     INNER JOIN translation on synonym.translation = translation.translation
+                    INNER JOIN language on translation.language = language.language
                     INNER JOIN term on translation.term = term.term
                     WHERE word.name = '$word'
+                    AND language.name = '$language'
                 ) AS search ON search.term = term.term
                 GROUP BY term.name, language.name, term.type
             ) as result
@@ -51,7 +54,7 @@ function get_language($word){
         //At this point there's no data from the database.
         if(count($row) === 0){
             //
-            //Display the potential.
+            //Display a negative message.
             echo json_encode([
                     "success" => false,
                     "data" => "No data"
@@ -61,7 +64,7 @@ function get_language($word){
         //At this point there's data from the database.
         if(count($row) > 0){
             //
-            //Display the potential.
+            //Display a positive message.
             echo json_encode(
                 [
                     "success" => true,
@@ -71,4 +74,4 @@ function get_language($word){
         }
 }
 //
-get_language($word);
+get_language($word, $language);

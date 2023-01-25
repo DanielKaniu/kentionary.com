@@ -27,8 +27,8 @@ if($_SERVER["REQUEST_METHOD"] == "OPTIONS"){
     if (isset($_SERVER["HTTP_ACCESS_CONTROL_REQUEST_HEADERS"]))
         header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
 
-    // //Just exit with 200 OK with the above headers for OPTIONS method
-    // exit(0);
+    //Just exit with 200 OK with the above headers for OPTIONS method
+    exit(0);
 }
 //
 //Connect to the database (Procedurally).

@@ -3,14 +3,14 @@ import { Injectable } from '@angular/core';
 //Get access to the server api.
 import { HttpClient } from '@angular/common/http';
 import { Language } from 'src/types/types';
+//
+//The path to the server.
+import { url } from './url';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LanguageService {
-  //
-  //The API URL.
-  public url: string = 'http://localhost/kenny_final/api/data/';
   //
   constructor(
     //
@@ -24,7 +24,7 @@ export class LanguageService {
     return this.http.get<Array<Language>>(
         //
         //The API URL.
-        this.url + 'get_language.php',
+        url + 'data/get_language.php',
         //
         //Specifies the format in which to return data.
         {responseType: 'json'}

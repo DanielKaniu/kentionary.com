@@ -13,9 +13,10 @@ The sidenav. */
 /*
 The sidenav menu button. */
 #menu{
-    position: absolute;
+    position: sticky;
     left: 2%;
     top: 2%;
+    z-index: 1;
 }
 /*
 The sidenav's logo. */
@@ -42,9 +43,10 @@ The sidenav's title. */
 }
 /*
 The links in the sidenav. */
-a{
+span{
     display: block;
-    text-decoration: none;
+    cursor: pointer;
+    color: rgb(34, 0, 255);
     font-weight: 500;
     margin-top: 10%;
     margin-left: 6%;
@@ -56,4 +58,57 @@ a::hover{
     position: fixed;
     bottom: 0;
     left: 2%;
+}
+mat-icon{
+    color: rgb(137, 61, 61);
+    font-size: 1.5rem;
+    margin-right: 4%;
+    cursor: pointer;
+}
+#menu mat-icon{
+    color: aliceblue;
+}
+#mobile_view{
+    display: none;
+}
+/*
+The link to navigate to the page for adding a new translation. */
+#add_new_translation{
+    position: fixed;
+    bottom: 10%;
+    right: 3%;
+    font-size: 3rem;
+    z-index: 1;
+}
+/*
+Style for tablets + mobile devices. */
+@media only screen and (max-width: 768px) {
+    /*
+    The sidenav. */
+    #sidenav_container{
+        height: 90%;
+    }
+    #sidenav_content{
+        height: 90%;
+        justify-content: center;
+    }
+    mat-drawer, #menu{
+        display: none;
+    } 
+    #mobile_view{
+        position: relative;
+        bottom: 0;
+        margin-top: 2%;
+        display: flex;
+        justify-content: space-evenly;
+    }  
+    mat-icon{
+        font-size: 3rem;
+    } 
+    mat-icon::hover{
+        background-color: yellow;
+    }
+    #add_new_translation{
+        display: none;
+    }
 }

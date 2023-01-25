@@ -48,10 +48,7 @@ export class AddComponent implements OnInit {
   //
   //Synonym(s) form control.
   synonym_word_control = new FormControl('', Validators.required);
-  synonym_meaning_control = new FormControl(
-    'handu ha guikara',
-    Validators.required
-  );
+  synonym_meaning_control = new FormControl('',Validators.required);
   synonym_sentence_control = new FormControl('', Validators.required);
   //
   //Language form control.
@@ -234,45 +231,6 @@ export class AddComponent implements OnInit {
     //
     //Move to the previous step.
     this.step--;
-  }
-  //
-  //Pop up the dialog box.
-  openDialog(word: Array<string> | null): void {
-    //
-    const dialogRef: MatDialogRef<terms_dialog, any> = this.dialog.open(
-      terms_dialog,
-      {
-        data: { word: word, category: this.categories },
-      }
-    );
-    //
-    //Get data passed from the dialog after closing.
-    dialogRef.afterClosed().subscribe((result) => {
-      //
-      //Save the selected term globally.
-      this.selected_term = result;
-      //
-      //Check if the user is creating a new term or not.
-      if(this.selected_term?.new_term === true){
-        //
-        //Save the new term in the database
-        this.save_new_term();
-      }
-      else{
-        //
-        //Check if the word and the term are linked.
-        this.check_and_save();
-      }
-    });
-  }
-  //
-  //Display the snackbar accordingly.
-  open_snackbar(message: string) {
-    //
-    this._snackBar.openFromComponent(terms_snack_bar, {
-      duration: this.duration * 1000,
-      data: { msg: message },
-    });
   }
   //
   //Check if the translations are linked to the chosen term
@@ -837,5 +795,45 @@ export class AddComponent implements OnInit {
         }
       );
     }
+  }
+  //
+  //Pop up the dialog box.
+  openDialog(word: Array<string> | null): void {
+    //
+    const dialogRef: MatDialogRef<terms_dialog, any> = this.dialog.open(
+      terms_dialog,
+      {
+        data: { word: word, category: this.categories },
+      }
+    );
+    //
+    //Get data passed from the dialog after closing.
+    dialogRef.afterClosed().subscribe((result) => {
+      //
+      //Save the selected term globally.
+      this.selected_term = result;
+      //
+      //Check if the user is creating a new term or not.
+      if(this.selected_term?.new_term === true){
+        //
+        //Save the new term in the database
+        this.save_new_term();
+      }
+      else{
+        //
+        //Check if the word and the term are linked.
+        this.check_and_save();
+      }
+    });
+  }
+  //
+  //Display the snackbar accordingly.
+  open_snackbar(message: string) {
+    //
+    this._snackBar.openFromComponent(terms_snack_bar, {
+      duration: this.duration * 1000,
+      data: { msg: message },
+      panelClass: ['add_snackbar']
+    });
   }
 }

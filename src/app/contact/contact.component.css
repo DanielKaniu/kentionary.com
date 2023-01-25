@@ -1,0 +1,57 @@
+#form{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 2%;
+    width: 100%;
+}
+#logo{
+    width: 7%;
+    margin-bottom: 2%;
+}
+#title{
+    font-weight: 700;
+    margin-bottom: 2%;
+    text-align: center;
+}
+#logo_div{
+    text-align: center;
+    margin-top: 1%;
+}
+mat-form-field{
+    width: 60%;
+}
+#details{
+    width: 40%;
+    text-align: center;
+}
+#map{
+    margin-top: 3%;
+    text-align: center;
+}
+iframe{
+    width: 80%;
+}
+/*
+Style for tablet devices. */
+@media only screen and (max-width: 768px) {
+    #form{
+        display: block;
+    }
+    #details{
+        margin: 5% 0 10% 20%;
+    }
+    mat-form-field{
+        width: 15rem;
+    }
+    button{
+        margin-left: 20%;
+    }
+    #map{
+        text-align: center;
+    }
+    iframe{
+        width: 90%;
+        height: 20rem;
+    }
+}

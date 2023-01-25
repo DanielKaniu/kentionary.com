@@ -1,126 +1,260 @@
 /*
 The main page's logo. */
-#logo_main{
-    width: 10%;
+#logo_main {
+  width: 3%;
 }
-#tagline{
-    font-style: italic;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    margin-bottom: 3%;
+#company{
+  font-weight: bold;
+  font-size: 3.5rem;
+  margin-left: 2%;
+  margin-bottom: 3%;
+}
+#tagline {
+  font-style: italic;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  margin-bottom: 3%;
 }
 /* width */
 ::-webkit-scrollbar {
-    width: 10px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px grey; 
-    border-radius: 10px;
-  }
-   
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: rgb(228, 184, 184); 
-    border-radius: 10px;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #a69ed1; 
-  }
+  width: 10px;
+}
 
-#form{
-    margin-top: 2%;
-    text-align: center;
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(249, 145, 145);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #9ed1b1;
+}
+
+#form {
+  text-align: center;
 }
 /*
 The container for the translations. */
-#translation_container{
-    height: 80vh;display: grid;
-    grid-template-rows: 50px 1fr 30px;
-    grid-template-columns: 1fr 3fr 2fr;
-    gap: 10px;
-    grid-template-areas: 
-            "a b c"
-            "a b c"
-            "v b c";
+#translation_container {
+  height: 80vh;
+  width: 98%;
+  display: grid;
+  margin-top: 3%;
+  grid-template-rows: 50px 1fr 30px;
+  grid-template-columns: 1fr 3fr 2fr;
+  gap: 10px;
+  grid-template-areas:
+    "a b c"
+    "a b c"
+    "v b n";
 }
 /*
 The panel holding the category. */
-#left_panel{
-    grid-area: a;
-    background: rgb(79, 75, 75);
-    color: antiquewhite;
-    padding-top: 50%;
-    font-weight: 500;
-    text-align: center;
-    border-radius: 10px 100px / 120px;
+#left_panel {
+  grid-area: a;
+  overflow: hidden;
+  background: rgb(0, 0, 0);
+  color: antiquewhite;
+  margin-left: 3%;
+  padding-top: 50%;
+  font-weight: 500;
+  text-align: center;
+  border-radius: 10px 100px / 120px;
 }
 /*
 The panel for the translations. */
-#content{
-    grid-area: b;
-    background: rgb(255, 134, 134);
-    color: rgb(0, 0, 0);
-    border-radius: 2%;
-    overflow-y: auto;
-    padding-top: 3%;
-    padding-left: 5%;
-    border-radius: 2% / 30%;
+#content {
+  grid-area: b;
+  background: #e35454;
+  color: rgb(0, 0, 0);
+  border-radius: 2%;
+  overflow-y: auto;
+  padding-top: 3%;
+  padding-left: 5%;
+  border-radius: 2% / 3%;
 }
-#right_panel{
-    grid-area: c;
-    background: rgb(120, 255, 120);
-    border-radius: 4%;
-    margin-right: 3%;
-    border-radius: 100px 10px / 120px;
+#right_panel {
+  grid-area: c;
+  background: rgb(0, 255, 0);
+  border-radius: 4%;
+  margin-right: 3%;
+  border-radius: 100px 10px / 120px;
 }
-.input_word{
-    width: 50%;
-}
-#translate{
-    margin-bottom: 5%;
+.input_word {
+  width: 40%;
+  margin-left: 1.5%;
 }
 /*
 The translations. */
-#term{
-    display: inline;
-    font-weight: bold;
-    margin-left: 2%;
+#term {
+  display: inline;
+  font-weight: bold;
+  margin-left: 4%;  
+  letter-spacing: 1px;
 }
-#languages{
-    font-weight: 500;
-    font-style: italic;
-    text-decoration: underline;
-    margin-left: 2%;
+#languages {
+  font-weight: 500;
+  font-style: italic;
+  text-decoration: underline;
+  margin-left: 5%;
 }
-#word{
-    margin-left: 5%;
-    margin-bottom: 3%;
+#word {
+  margin-left: 8%;
+  margin-bottom: 3%;
 }
-#language{
-    margin-left: 15%;
+#language {
+  margin-left: 15%;
 }
 /*
 The national anthem. */
-#national_anthem{
-    display: flex;
-    justify-content: center;
+#national_anthem {
+  display: flex;
+  justify-content: center;
+  background: lightgreen;
+  margin: 0px 5% 0px 5%;
+  padding: 1.5%;
+  border-radius: 1rem;
 }
-h2{
-    text-align: center;
+h2 {
+  margin-top: 5%;
+  text-align: center;
 }
-#swahili_anthem,#english_anthem{
-    width: 30%;
+#swahili_anthem,
+#english_anthem {
+  width: 100%;
 }
-.anthem_language{
-    font-weight: 900;
+.anthem_language {
+  text-decoration: underline;
+  font-weight: bold;
+}
+#stats{
+  margin-top: 15%;
+  margin-left: 10%;
+}
+.stat_dets{
+  display: block;
+  margin-top: 10%;
+  margin-left: 5%;
+}
+.stats{
+  font-weight: 500;
+}
+.example{
+  margin-left: 5%;
+  font-style: italic;
+  text-decoration: underline;
+  font-size: smaller;
+}
+#title_stats{
+  text-align: center;
+  margin-top: 5%;
+  font-weight: bold;
+}
+#chart_icon{
+  color: purple;
+  font-size: 2rem;
+}
+#title_stats_text{
+  margin-left: 7%;
+  text-decoration: underline;
 }
 /*
-The link to navigate to the page for adding a new translation. */
-#add_new_translation{
-    position: fixed;
-    bottom: 3%;
-    right: 3%;
+Style for tablets devices. */
+@media only screen and (max-width: 768px) {
+  /*
+The container for the translations. */
+  #translation_container {
+    height: 80vh;
+    display: grid;
+    grid-template-rows: 2fr 1fr;
+    grid-template-columns: 1fr 2fr;
+    gap: 10px;
+    grid-template-areas:
+      " b b"
+      " a c";
+  }
+  /*
+  The panel holding the category. */
+  #left_panel {
+    grid-area: a;
+    overflow-y: scroll;
+    background: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    padding-top: 10%;
+    font-weight: 500;
+    text-align: center;
+    border-radius: 10px 100px / 120px;
+  }
+  /*
+The panel for the translations. */
+  #content {
+    grid-area: b;
+    border-radius: 2%;
+    overflow-y: auto;
+    margin-left: 3%;
+    padding-top: 3%;
+    padding-left: 5%;
+    border-radius: 2% / 3%;
+  }
+  #right_panel {
+    grid-area: c;
+    overflow-y: scroll;
+    background: rgb(0, 255, 0);
+    border-radius: 4%;
+    margin-right: 3%;
+    border-radius: 100px 10px / 120px;
+  }
+  #left_panel::-webkit-scrollbar, #right_panel::-webkit-scrollbar {
+    /* 
+    Remove scrollbar space */
+    width: 0;
+    /* 
+    Optional: just make scrollbar invisible */
+    background: transparent; 
+}
+  #stats{
+    margin-top: 10%;
+    margin-bottom: 4%;
+  }
+  #stats_dets{
+    margin-top: 2%;
+  }
+  #national_anthem {
+    display: block;
+    border-radius: 1rem;
+  }
+}
+/*
+Style for mobile devices. */
+@media only screen and (max-width: 480px) {
+  /*
+  The panel holding the category. */
+  #left_panel {
+    grid-area: a;
+    overflow-y: scroll;
+    background: rgb(0, 0, 0);
+    color: antiquewhite;
+    padding-top: 10%;
+    font-weight: 500;
+    text-align: center;
+    border-radius: 1rem 3rem / 4rem;
+  }
+
+  #form_word{
+    text-align: center;
+  }
+
+  mat-form-field{
+    width: 60%;
+  }
+
+  .input_word{
+    width: 60%;
+  }
 }

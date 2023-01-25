@@ -3,14 +3,29 @@
       <div id="sidenav_logo_container">
         <img id="logo_sidenav" src="../../assets/images/kenny.png" alt="Kentionary's Logo">
         <div id="title_sidenav">KENTIONARY INC.</div>
-        <div id="tagline">Translate Kenya</div>
+        <div id="tagline">Translating Kenya</div>
       </div>
 
-      <a routerLink="/translate">Translate</a>
-      <a routerLink="/add">Add new translation</a>
-      <a href="">About Us </a>
-      <a href="">Contact Us</a>
-      <a href="">Provide Support</a>
+      
+        <span class="icon" routerLink="/translate">
+          <mat-icon>g_translate</mat-icon>Translate
+        </span>
+      
+      <span class="icon" routerLink="/add">
+        <mat-icon>add_circle</mat-icon>Add new translation
+      </span>
+      
+        <span class="icon" routerLink="/about">
+          <mat-icon>history</mat-icon>About Us 
+        </span>
+      
+        <span class="icon" routerLink="/contact">
+          <mat-icon>contact_phone</mat-icon>Contact Us
+        </span>
+
+        <!-- <span class="icon" routerLink="/support">
+          <mat-icon>attach_money</mat-icon>Provide Support
+        </span> -->
 
       <div id="copyright">© 2023 Kentionary, Inc.</div>
     </mat-drawer>
@@ -25,5 +40,23 @@
       </button>
       <router-outlet></router-outlet>
     </div>
-  </mat-drawer-container>
+</mat-drawer-container>
+<div id="mobile_view">
   
+    <mat-icon class="icon" routerLink="/translate">g_translate</mat-icon>
+  
+    <mat-icon class="icon" routerLink="/add">add_circle</mat-icon>
+
+    <mat-icon class="icon" routerLink="/about">history</mat-icon>
+
+    <mat-icon class="icon" routerLink="/contact">contact_phone</mat-icon>
+  
+    <!-- <mat-icon class="icon" routerLink="/support">attach_money</mat-icon> -->
+</div>
+
+<mat-icon
+  routerLink="/add" 
+  mat-mini-fab color="primary" 
+  id="add_new_translation">
+    add_circle
+</mat-icon>

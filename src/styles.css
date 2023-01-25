@@ -7,3 +7,15 @@ html, body {
     height: 100%; 
 }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.add_snackbar{
+    width: 4rem;
+    background: rgb(168, 14, 14);
+    color: white;
+}
+/*
+Style for tablets devices. */
+@media only screen and (max-width: 768px) {
+    * {
+        font-size: large;
+    }
+}

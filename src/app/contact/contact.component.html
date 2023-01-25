@@ -1,0 +1,44 @@
+<div id="logo_div">
+    <img id="logo" src="../../assets/images/kenny.png" alt="Kentionary's Logo">
+</div>
+<div id="title">SAY HI 👋</div>
+<div id="form">    
+    <div id="details">
+        <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input type="email" matInput [formControl]="email_control" />
+            <mat-error *ngIf="email_control.hasError('required')">
+              Email is <strong>required</strong>
+            </mat-error>
+          </mat-form-field><br>
+    
+        <mat-form-field appearance="fill">
+            <mat-label>Subject</mat-label>
+            <input type="text" matInput [formControl]="subject_control" />
+            <mat-error *ngIf="subject_control.hasError('required')">
+              Subject is <strong>required</strong>
+            </mat-error>
+          </mat-form-field><br />
+      
+          <mat-form-field appearance="fill">
+            <mat-label>Enter the message</mat-label>
+            <textarea matInput [formControl]="message_control"></textarea>
+            <mat-error *ngIf="message_control.hasError('required')">
+              Message is <strong>required</strong>
+            </mat-error>
+          </mat-form-field><br>
+
+          <div>
+            <button mat-raised-button color="accent" (click)="send_message()">Submit</button>
+          </div>
+    </div>
+</div>
+<div id="map">
+  <iframe 
+    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3988.5773294955393!2d36.686620064754095!3d-1.4290802489577556!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f0131c033b1ef%3A0x569be8715ba7ec81!2sMutall%20Business%20Centre!5e0!3m2!1sen!2ske!4v1674309384700!5m2!1sen!2ske"
+    style="border:0;" 
+    allowfullscreen="" 
+    loading="lazy" 
+    referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
+</div>

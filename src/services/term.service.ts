@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Term, Word_for_term } from 'src/types/types';
+//
+//The path to the server.
+import { url } from './url';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TermService {
-  //
-  //The API URL.
-  public url: string = 'http://localhost/kenny_final/api/data/';
   //
   constructor(
     //
@@ -22,7 +22,7 @@ export class TermService {
     return this.http.post<Term>(
         //
         //The API URL.
-        this.url + 'get_term.php',
+        url + 'data/get_term.php',
         //
         //The request body
         {word: word},
