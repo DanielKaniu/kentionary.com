@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import { TranslateService } from 'src/services/translate.service';
 import { Translation } from 'src/types/types';
@@ -12,10 +12,13 @@ import { LanguageService } from 'src/services/language.service';
   templateUrl: './translate.component.html',
   styleUrls: ['./translate.component.css']
 })
-export class TranslateComponent implements OnInit  {
+export class TranslateComponent implements OnInit, AfterViewInit  {
+  //
+  //The show/hide state of the right panel.
+  is_hidden_stats?: boolean; 
   //
   //The state to determine if a user wants to specify the 
-  checked?: false;
+  checked?: boolean;
   //
   //The state to control adding a new translation.
   is_new: boolean = true;
@@ -29,14 +32,20 @@ export class TranslateComponent implements OnInit  {
   //The word to translate.
   word?: string | null;
   //
-  //The language of the word to translate.
-  language?: string | null;
+  //The language of the word to translate from.
+  language_from?: string | null;
+  //
+  //The language of the word to translate to.
+  language_to?: string | null;
   //
   //The word to translate.
-  word_control = new FormControl('', Validators.required);
+  word_control = new FormControl('nchi', Validators.required);
   //
   //Language form control.
-  language_control = new FormControl('', Validators.required);
+  language_from_control = new FormControl('Swahili', Validators.required);
+  //
+  //Language to control.
+  language_to_control = new FormControl('', Validators.required);
   //
   //The translation  response from the server.
   translations: any = [];
@@ -46,6 +55,9 @@ export class TranslateComponent implements OnInit  {
   //
   //The languages.
   languages: any = [];
+  //
+  //The statistics.
+  stats: any = {};
   //
   //The languages to display on the left panel.
   languages_panel: any = [];
@@ -85,6 +97,10 @@ export class TranslateComponent implements OnInit  {
     //The router.
     private router: Router
   ) { }
+  ngAfterViewInit(): void {
+    //
+    this.translate();
+  }
   //
   ngOnInit(): void {
     //
@@ -101,40 +117,105 @@ export class TranslateComponent implements OnInit  {
         }
       }
     );
-    // this.translate();
+    //
+    //Hide the statistics.
+    this.is_hidden_stats = true;
   }
+
   //
   //Get the translation.
   translate(): void{
     //
-    //Show the translation panel.
-    this.is_translate = false;
-    //
     //The input field.
     const input = document.getElementById('input_word') as HTMLInputElement;
-    //
-    //The select element.
     //
     //The translations panel.
     const content = document.getElementById('content') as HTMLDivElement;
     //
-    //Check if the input field is empty or not.
-    if (input.value !== '' && this.language_control.value !== '') {
+    //Check the state of the checkbox.
+    if (this.checked === true) {
+      //
+      //Check if the input field is empty or not.
+      if (input.value !== '' && this.language_from_control.value !== '' && this.language_to_control.value !== '') {
         //
         //The word to translate.
         this.word = this.word_control.value;
         //
         //The language of the word to translate.
-        this.language = this.language_control.value;
+        this.language_from = this.language_from_control.value;
         //
-        //Send the word to translate to the server.
-        this.translate_service.get_translation(this.word, this.language).subscribe(
+        //The language of the word to translate.
+        this.language_to = this.language_to_control.value;
+        //
+        //Send the word to translate to the server(with the language from and language to).
+        this.translate_service.get_translation_filter(this.word, this.language_from, this.language_to).subscribe(
           //
           //Get some response from the server.
           (response: any) => {
             //
             //The data from the server.
             const data = response.data;
+            //
+            //Show the translation panel.
+            this.is_translate = false;
+            //
+            //Check if the server has sent some results.
+            //
+            //At this point there are some results.
+            if (response.success === true) {
+              //
+              //Show the translations.
+              this.is_new = true;
+              //
+              //Empty the translations array.
+              this.translations = [];
+              this.languages = [];
+              //
+              //Organize the translations received from the database.
+              this.dissect_translation(data);
+            } 
+            //
+            //At this point there is no result.
+            else {
+              //
+              //Make the elements for asking the user if to add a new translation or not.
+              this.is_new = false;
+            }
+          }
+        );
+      } else {
+        //
+        //Clear the content panel
+        content?.innerHTML === '';
+        //
+        //Ask the user to enter a value.
+        this.open_snackbar('Missing value(s)');
+      }
+    } 
+    //
+    //At this point, the filter is off
+    else {
+      //
+      //Check if the input field is empty or not.
+      if (input.value !== '' && this.language_from_control.value !== '') {
+        //
+        //The word to translate.
+        this.word = this.word_control.value;
+        //
+        //The language of the word to translate.
+        this.language_from = this.language_from_control.value;
+        //
+        //Send the word to translate to the server.
+        this.translate_service.get_translation(this.word, this.language_from).subscribe(
+          //
+          //Get some response from the server.
+          (response: any) => {
+            //
+            //The data from the server.
+            const data = response.data;
+            //
+            //Show the translation panel.
+            this.is_translate = false;
             //
             //Check if the server has sent some results.
             //
@@ -158,18 +239,20 @@ export class TranslateComponent implements OnInit  {
               //Make the elements for asking the user if to add a new translation or not.
               this.is_new = false;
               //
-              //Get the other pan
+              //Hide the statistics.
+              this.is_hidden_stats = true;
             }
           }
         );
-    } else {
-      //
-      //Clear the content panel
-      content?.innerHTML === '';
-      //
-      //Ask the user to enter a value.
-      this.open_snackbar('Missing value(s)');
-    } 
+      } else {
+        //
+        //Clear the content panel
+        content?.innerHTML === '';
+        //
+        //Ask the user to enter a value.
+        this.open_snackbar('Missing value(s)');
+      }  
+    }
   }
   //
   //Split the languages and words from the translations.
@@ -230,6 +313,7 @@ export class TranslateComponent implements OnInit  {
         //
         //Add the translation to the translation array.
         this.translations.push({words: translated});
+        console.log(this.translations);
         //
         //Languages and their translations.
         this.language_translations.push(translations);
@@ -250,6 +334,9 @@ export class TranslateComponent implements OnInit  {
     //
     //Number of translated words.
     this.word_count = this.word_translations.length;
+    //
+    //Show the statistics.
+    this.is_hidden_stats = false;
   }
   //
   //Allow the user create a new translation.
@@ -274,6 +361,13 @@ export class TranslateComponent implements OnInit  {
       //Open the page that lets the user add a new translation.
       this.router.navigate(['/add']);
     }
+  }
+  //
+  //Get the status of the checkbox.
+  checkbox_changed(value: boolean):void {
+    //
+    //Save the value globally.
+    this.checked = value;
   }
   //
   //Display the snackbar accordingly.

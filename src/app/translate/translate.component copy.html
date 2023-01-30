@@ -60,7 +60,7 @@
         </span>
       </span>
 
-      <button mat-raised-button (click)="translate()" id="translate">
+      <button mat-raised-button color="accent" (click)="translate()" id="translate">
         Translate
       </button>
     </form>
@@ -81,11 +81,22 @@
             Add new translation
           </button>
         </div>
+        <div *ngFor="let translation of translations" [hidden]="!is_new">
 
-        <div *ngFor="let translation of translations"> 
-          <span id="term">{{ translation.term }} </span>
-          <span id="languages">{{ translation.language }} </span>
-          <span id="word">{{ translation.words }} </span>
+          <mat-chip-list #workEduChipList aria-label="Fruit selection">
+            <mat-chip class="matChip" *ngFor="let translation of translations">
+                {{ translation.words }}
+              <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip>
+          </mat-chip-list>
+
+              <span id="term">{{ translation.term }} </span>
+              <span id="languages">{{ translation.language }} </span>
+              <span id="word">
+                <mat-chip>{{ translation.words }}</mat-chip>
+              </span>
         <br />
         </div>
       </div>
@@ -99,7 +110,6 @@
           <div class="stat_dets"> 
             <span 
               class="stats" 
-              color="accent"
               matBadge="{{ language_count }}" 
               matBadgeOverlap="false"
               matBadgePosition="before">

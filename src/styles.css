@@ -7,10 +7,11 @@ html, body {
     height: 100%; 
 }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/*
+The snack_bar. */
 .add_snackbar{
-    width: 4rem;
-    background: rgb(168, 14, 14);
-    color: white;
+    background: #03001C;
+    color: rgb(255, 255, 255);
 }
 /*
 Style for tablets devices. */

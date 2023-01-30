@@ -38,41 +38,45 @@
 </div>
 
 <div mat-dialog-actions>
-  <button mat-button mat-dialog-close cdkFocusInitial [hidden]="!is_hidden">
+  <button mat-button mat-dialog-close>
     Cancel
   </button>
-  <button
-    mat-button
-    cdkFocusInitial
-    (click)="create_term()"
-    [hidden]="!is_hidden"
-  >
-    No
-  </button>
-  <button
-    mat-button
-    cdkFocusInitial
-    (click)="get_selected_term()"
-    [hidden]="!is_hidden"
-  >
-    Continue
-  </button>
-  <button 
-    mat-button 
-    cdkFocusInitial 
-    [hidden]="is_hidden"
-    (click)="hide()">
-    Back
-  </button>
-  <button mat-button mat-dialog-close cdkFocusInitial [hidden]="is_hidden">
-    Cancel
-  </button>
-  <button
-    mat-button
-    cdkFocusInitial
-    (click)="get_new_term()"
-    [hidden]="is_hidden"
-  >
-    Create
-  </button>
+
+  <span [hidden]="!is_hidden">
+    <button
+      mat-button
+      (click)="create_term()"
+    >
+      No
+    </button>
+  </span>
+
+  <span [hidden]="!is_hidden">
+    <button
+      mat-button
+      cdkFocusInitial
+      (click)="get_selected_term()"
+    >
+      Yes
+    </button>
+  </span>
+  
+  <span [hidden]="is_hidden">
+    <button 
+      mat-button 
+      (click)="hide()">
+      Back
+    </button>
+  </span>
+  
+  <span [hidden]="is_hidden">
+    <button
+      mat-button
+      cdkFocusInitial
+      (click)="get_new_term()"
+    >
+      Create
+    </button>
+  </span>
+  
 </div>

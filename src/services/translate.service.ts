@@ -15,7 +15,7 @@ export class TranslateService {
     private http: HttpClient
   ) { }
   //
-  //Get the list of categories from the database.
+  //Get the translation from the database.
   get_translation(word: string | null, language: string | null){
     //
     return this.http.post(
@@ -27,6 +27,26 @@ export class TranslateService {
         {
           word: word, 
           language: language
+        },
+        //
+        //Specifies the format in which to return data.
+        {responseType: 'json'}
+      );
+  }
+  //
+  //Get the filtered translation, with both language_from + language_to, from the database.
+  get_translation_filter(word: string | null, language_from: string | null, language_to: string | null){
+    //
+    return this.http.post(
+        //
+        //The API URL.
+        url + 'data/get_translation_filter.php',
+        //
+        //The word to translate.
+        {
+          word: word, 
+          language_from: language_from,
+          language_to: language_to
         },
         //
         //Specifies the format in which to return data.

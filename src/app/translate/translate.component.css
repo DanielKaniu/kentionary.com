@@ -27,7 +27,7 @@ The main page's logo. */
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: rgb(249, 145, 145);
+  background: #b9c3d7;
   border-radius: 10px;
 }
 
@@ -38,6 +38,13 @@ The main page's logo. */
 
 #form {
   text-align: center;
+  margin-top: 4%;
+}
+/*
+The translate button. */
+button {
+    background: #395B64;
+    color: aliceblue;
 }
 /*
 The container for the translations. */
@@ -59,8 +66,8 @@ The panel holding the category. */
 #left_panel {
   grid-area: a;
   overflow: hidden;
-  background: rgb(0, 0, 0);
-  color: antiquewhite;
+  background: #CDFFEB;
+  color: #0F0A3C;
   margin-left: 3%;
   padding-top: 50%;
   font-weight: 500;
@@ -71,8 +78,8 @@ The panel holding the category. */
 The panel for the translations. */
 #content {
   grid-area: b;
-  background: #e35454;
-  color: rgb(0, 0, 0);
+  background: #A3F7BF;
+  color: #60316E;
   border-radius: 2%;
   overflow-y: auto;
   padding-top: 3%;
@@ -81,14 +88,23 @@ The panel for the translations. */
 }
 #right_panel {
   grid-area: c;
-  background: rgb(0, 255, 0);
+  background: #CDFFEB;
+  color: #0F0A3C;
   border-radius: 4%;
-  margin-right: 3%;
   border-radius: 100px 10px / 120px;
 }
 .input_word {
   width: 40%;
   margin-left: 1.5%;
+  margin-right: 1.5%;
+}
+#check_box{
+  margin-left: 1%;
+  font-size: large;
+}
+#filter{
+  color: blueviolet;
+  margin-left: 10%;
 }
 /*
 The translations. */
@@ -116,7 +132,7 @@ The national anthem. */
 #national_anthem {
   display: flex;
   justify-content: center;
-  background: lightgreen;
+  background: #F7EFE5;
   margin: 0px 5% 0px 5%;
   padding: 1.5%;
   border-radius: 1rem;
@@ -168,6 +184,23 @@ h2 {
 Style for tablets devices. */
 @media only screen and (max-width: 768px) {
   /*
+  The main page's logo. */
+  #logo_main {
+    width: 7%;
+  }
+  #company{
+    font-weight: bold;
+    font-size: 3rem;
+    margin-left: 2%;
+    margin-bottom: 3%;
+  }
+  #tagline {
+    font-style: italic;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    margin-top: 2%;
+    margin-bottom: 6%;
+  }
+  /*
 The container for the translations. */
   #translation_container {
     height: 80vh;
@@ -184,8 +217,6 @@ The container for the translations. */
   #left_panel {
     grid-area: a;
     overflow-y: scroll;
-    background: rgb(0, 0, 0);
-    color: rgb(255, 255, 255);
     padding-top: 10%;
     font-weight: 500;
     text-align: center;
@@ -205,9 +236,7 @@ The panel for the translations. */
   #right_panel {
     grid-area: c;
     overflow-y: scroll;
-    background: rgb(0, 255, 0);
     border-radius: 4%;
-    margin-right: 3%;
     border-radius: 100px 10px / 120px;
   }
   #left_panel::-webkit-scrollbar, #right_panel::-webkit-scrollbar {
@@ -217,7 +246,17 @@ The panel for the translations. */
     /* 
     Optional: just make scrollbar invisible */
     background: transparent; 
-}
+  }
+  #form{
+    margin-top: 8%;
+  }
+  #lang_to_checkbox{
+    display: block;
+    margin-bottom: 2%;
+  }
+  #check_box{
+    margin-left: 2%;
+  }
   #stats{
     margin-top: 10%;
     margin-bottom: 4%;
@@ -233,13 +272,30 @@ The panel for the translations. */
 /*
 Style for mobile devices. */
 @media only screen and (max-width: 480px) {
+  #logo{
+    display: block;
+    text-align: center;
+  }
+  /*
+  The main page's logo. */
+  #logo_main {
+    width: 15%;
+    margin-bottom: 7%;
+  }
+  #company{
+    font-weight: bold;
+    font-size: 2.5rem;
+    margin-left: 2%;
+    margin-bottom: 3%;
+  }
+  #form{
+    text-align: center;
+  }
   /*
   The panel holding the category. */
   #left_panel {
     grid-area: a;
     overflow-y: scroll;
-    background: rgb(0, 0, 0);
-    color: antiquewhite;
     padding-top: 10%;
     font-weight: 500;
     text-align: center;
@@ -248,6 +304,11 @@ Style for mobile devices. */
 
   #form_word{
     text-align: center;
+  }
+
+  #checkbox{
+    display: block;
+    margin-bottom: 5%;
   }
 
   mat-form-field{

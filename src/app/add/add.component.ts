@@ -1,10 +1,9 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { CategoryService } from 'src/services/category.service';
 import { LanguageService } from 'src/services/language.service';
 import {
   Category,
-  Check,
   Language,
   New_term,
   Selected_term,
@@ -20,6 +19,7 @@ import { SaveService } from 'src/services/save.service';
 //
 //To get the query parameters passed from the translate component.
 import { ActivatedRoute } from '@angular/router';
+import { ImageService } from 'src/services/image.service';
 //
 @Component({
   selector: 'app-add',
@@ -39,29 +39,27 @@ export class AddComponent implements OnInit {
   selected_term?: Selected_term | New_term;
   //
   //The word(s) to translate.
-  translate_from_control = new FormControl('', Validators.required);
-  translate_to_control = new FormControl('', Validators.required);
+  translate_from_control = new FormControl('house', Validators.required);
+  translate_to_control = new FormControl('nyumba', Validators.required);
+  synonym_word_control = new FormControl('nyumba');
   //
   //Example sentence(s).
   sentence_to_control = new FormControl();
   sentence_from_control = new FormControl();
-  //
-  //Synonym(s) form control.
-  synonym_word_control = new FormControl('', Validators.required);
-  synonym_meaning_control = new FormControl('',Validators.required);
-  synonym_sentence_control = new FormControl('', Validators.required);
+  synonym_sentence_control = new FormControl();
   //
   //Language form control.
-  language_one_control = new FormControl('', Validators.required);
-  language_two_control = new FormControl('', Validators.required);
-  language_three_control = new FormControl('', Validators.required);
+  language_one_control = new FormControl('English', Validators.required);
+  language_two_control = new FormControl('Swahili', Validators.required);
+  language_three_control = new FormControl('Gikuyu');
   //
   //Meaning form control.
-  meaning_from_control = new FormControl('', Validators.required);
-  meaning_to_control = new FormControl('', Validators.required);
+  meaning_from_control = new FormControl('A buidling to live in', Validators.required);
+  meaning_to_control = new FormControl('Mahali pa kuishi', Validators.required);
+  synonym_meaning_control = new FormControl('Handu ha guikara');
   //
   //Category form control.
-  category_control = new FormControl('', Validators.required);
+  category_control = new FormControl('noun', Validators.required);
   //
   //The list of languages, from the database.
   languages?: Array<Language['data']>;
@@ -78,6 +76,9 @@ export class AddComponent implements OnInit {
   //The value to help know if the user has provided a synonym or not.
   synonym_state: boolean = false;
   //
+  //The image which the user wants to upload.
+  image?: string;
+  //
   constructor(
     //
     //The language service.
@@ -92,6 +93,9 @@ export class AddComponent implements OnInit {
     //The service that links words to their terms upon checking.
     private save_service: SaveService,
     //
+    //This image service helps the user save an image in the database.
+    private image_service: ImageService,
+    //
     //The dialog box.
     private dialog: MatDialog,
     //
@@ -101,17 +105,17 @@ export class AddComponent implements OnInit {
     //To help get the query parameters on the current URL.
     private route: ActivatedRoute
   ) {}
-
+  
   ngOnInit(): void {
     //
     //Get the query parameter.
-    this.route.queryParams.subscribe(
-      params => {
-        //
-        //Set the value of the word to translate from.
-        this.translate_from_control.setValue(params['word']);
-      }
-    );
+    // this.route.queryParams.subscribe(
+    //   params => {
+    //     //
+    //     //Set the value of the word to translate from.
+    //     this.translate_from_control.setValue(params['word']);
+    //   }
+    // );
     //
     //Retrieve the list of languages from the database
     this.language_service.get_language().subscribe(
@@ -205,6 +209,7 @@ export class AddComponent implements OnInit {
           //Pass the words that will use to get the terms to the dialog box
           this.openDialog(this.words_for_terms);
         } else {
+          console.log(this.words_for_terms);
           //
           //Ask the user to provide synonym.
           this.open_snackbar('Please provide a synonym');
@@ -731,6 +736,7 @@ export class AddComponent implements OnInit {
       translation_to: translation_to,
       synonym: synonym,
       term: this.selected_term,
+      image: this.image
     };
     //
     //Check if a user is adding a new synonym.
@@ -795,6 +801,32 @@ export class AddComponent implements OnInit {
         }
       );
     }
+  }
+  //
+  //Help the user upload an image on the server.
+  upload_image(evt: any) {
+    //
+    //Get the image attributes.
+    const image: File = evt.target?.files[0];
+    //
+    //Lets web applications asynchronously read the contents of files (or raw data buffers) 
+    //stored on the user's computer, using File or Blob objects to specify the file or data to read.
+    const file_reader = new FileReader();
+    //
+    //Read the uploaded image as a binary string.
+    file_reader.readAsBinaryString(image);
+    //
+    file_reader.onload = ((event: ProgressEvent<FileReader>) => {
+      //
+      //The content of the file.
+      const content = event.target?.result as string;
+      //
+      //Save the image content online.
+      this.image = content;
+      //
+      //Save the image on the server.
+      // this.image_service.upload_content(content).subscribe();
+    })
   }
   //
   //Pop up the dialog box.

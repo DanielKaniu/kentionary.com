@@ -31,6 +31,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatCardModule} from '@angular/material/card';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatCheckboxModule} from '@angular/material/checkbox';
+import { MatChipsModule} from '@angular/material/chips';
 //
 @NgModule({
   declarations: [
@@ -61,7 +63,9 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatButtonModule,
     MatSidenavModule,
     MatCardModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatCheckboxModule,
+    MatChipsModule
   ],
   exports: [RouterModule],
   providers: [],

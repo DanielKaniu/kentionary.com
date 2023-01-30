@@ -32,7 +32,7 @@
   
     <div id="sidenav_content">
       <button 
-        mat-mini-fab color="primary" 
+        mat-mini-fab
         aria-label="Button with a menu icon" 
         (click)="drawer.toggle()"
         id="menu">
@@ -43,20 +43,20 @@
 </mat-drawer-container>
 <div id="mobile_view">
   
-    <mat-icon class="icon" routerLink="/translate">g_translate</mat-icon>
+    <mat-icon class="icon_toolbar" routerLink="/translate">g_translate</mat-icon>
   
-    <mat-icon class="icon" routerLink="/add">add_circle</mat-icon>
+    <mat-icon class="icon_toolbar" routerLink="/add">add_circle</mat-icon>
 
-    <mat-icon class="icon" routerLink="/about">history</mat-icon>
+    <mat-icon class="icon_toolbar" routerLink="/about">history</mat-icon>
 
-    <mat-icon class="icon" routerLink="/contact">contact_phone</mat-icon>
+    <mat-icon class="icon_toolbar" routerLink="/contact">contact_phone</mat-icon>
   
     <!-- <mat-icon class="icon" routerLink="/support">attach_money</mat-icon> -->
 </div>
 
 <mat-icon
   routerLink="/add" 
-  mat-mini-fab color="primary" 
+  mat-mini-fab
   id="add_new_translation">
     add_circle
 </mat-icon>

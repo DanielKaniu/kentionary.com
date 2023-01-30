@@ -21,12 +21,12 @@ import { terms_snack_bar } from "../snackbar/snackbar";
     @ViewChild('divTerms') div_terms!: ElementRef;
     //
     //Show/hide the create new term elements.
-    is_hidden: boolean = true;
+    is_hidden?: boolean;
     //
     //The form controls.
-    term_control = new FormControl('', Validators.required);
-    category_control = new FormControl('', Validators.required);
-    meaning_term_control = new FormControl('', Validators.required);
+    term_control = new FormControl('housing', Validators.required);
+    category_control = new FormControl('noun', Validators.required);
+    meaning_term_control = new FormControl('a residential place', Validators.required);
     //
     //The terms.
     terms?: Array<Term['data']>;
@@ -63,6 +63,9 @@ import { terms_snack_bar } from "../snackbar/snackbar";
       //
       //Get the terms associated with the word provided by the user.
       this.get_terms();
+      //
+      //First hide the necessary elements.
+      this.is_hidden = true;
     }
     //
     //Fetch the terms.
@@ -129,7 +132,17 @@ import { terms_snack_bar } from "../snackbar/snackbar";
     //Get the selected term.
     get_selected_term(): void{
       //
-      this.dialogRef.close(this.selected_term);
+      //Ensure a radio button is selected.
+      if(this.selected_term === undefined){
+        //
+        //Ask the user to select one option.
+        this.open_snackbar('Select the term');
+      }
+      else{
+        //
+        //Close the dialog box and pass the selected term to the mother component.
+        this.dialogRef.close(this.selected_term);
+      }
     }
     //
     //Create a new term since the user has not seen the term s/he is looking for.

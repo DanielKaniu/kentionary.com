@@ -35,6 +35,7 @@ export class SaveService {
   //
   //Save the translationsand link them with their respective terms.
   save_new_term(values: any){
+    console.log(values);
     //
     return this.http.post<Save_result>(
         //

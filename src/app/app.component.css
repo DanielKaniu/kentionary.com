@@ -4,8 +4,9 @@ The sidenav. */
     height: 100%;
 }
 #sidenav_content{
-    height: 100%;
+    height: 50%;
     justify-content: center;
+    color: #2C3333;
 }
 #sidenav{
     width: 15%;
@@ -17,6 +18,7 @@ The sidenav menu button. */
     left: 2%;
     top: 2%;
     z-index: 1;
+    background: #395B64;
 }
 /*
 The sidenav's logo. */
@@ -43,10 +45,10 @@ The sidenav's title. */
 }
 /*
 The links in the sidenav. */
-span{
+.icon{
     display: block;
     cursor: pointer;
-    color: rgb(34, 0, 255);
+    color: #902424;
     font-weight: 500;
     margin-top: 10%;
     margin-left: 6%;
@@ -60,7 +62,7 @@ a::hover{
     left: 2%;
 }
 mat-icon{
-    color: rgb(137, 61, 61);
+    color: #3D1766;
     font-size: 1.5rem;
     margin-right: 4%;
     cursor: pointer;
@@ -90,24 +92,21 @@ Style for tablets + mobile devices. */
     }
     #sidenav_content{
         height: 90%;
-        justify-content: center;
     }
     mat-drawer, #menu{
         display: none;
     } 
     #mobile_view{
         position: relative;
-        bottom: 0;
+        bottom: 2;
         margin-top: 2%;
         display: flex;
         justify-content: space-evenly;
     }  
     mat-icon{
         font-size: 3rem;
+        color: #473C33;
     } 
-    mat-icon::hover{
-        background-color: yellow;
-    }
     #add_new_translation{
         display: none;
     }

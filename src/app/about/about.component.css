@@ -1,6 +1,5 @@
 #logo_div{
     text-align: center;
-    margin-top: 1%;
 }
 #logo{
     width: 7%;
@@ -13,7 +12,7 @@
 #main_title{
     text-align: center;
     font-size: 2rem;
-    margin-top: 3%;
+    margin-top: 1.5%;
     margin-bottom: 3%;
 }
 #body_container{
@@ -23,13 +22,42 @@
 #founder{
     width: 30%;
     margin-left: 3%;
+    border-radius: 3%;
+    transition: 0.5s ease-in-out;
+}
+#founder:hover{
+    box-shadow: 0px 0px 10px #03001C;
+}
+mat-card{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    background: #674188;
+    color: #F7EFE5;
+    border-radius: 3%;
 }
 #founder_name{
     font-weight: 600;
+    letter-spacing: 2px;
 }
 #founder_title{
     font-style: italic;
     margin-bottom: 5%;
+}
+#icons{
+    margin-top: 2%;
+}
+#angular_icon{
+    margin-right: 3%;
+}
+#github_icon, #angular_icon, #linkedin_icon{
+    cursor: pointer;
+    width: 6%;
+}
+#linkedin_icon{
+    background: #F9CC7B;
+    margin-left: 3%;
+}
+#stack{
+    color: #FDEBED;
 }
 #history{
     width: 50%;
@@ -46,6 +74,9 @@
 /*
 Style for mobile devices. */
 @media only screen and (max-width: 768px) {
+    #logo_div{
+        margin-top: 1%;
+    }
     #body_container{
         display: block;
     }
