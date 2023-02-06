@@ -6,7 +6,6 @@
     <span id="company">KENTIONARY</span>
     <div id="tagline">Translating Kenya</div>
     <form class="form_word">
-
       <span id="language_from">
         <mat-form-field appearance="outline">
           <mat-label>Language from</mat-label>
@@ -70,19 +69,30 @@
   <!-- <div [hidden]="false"> -->
     <div id="translation_container" [hidden]="is_translate">
       <div id="left_panel">
+        <div id="add_new" [hidden]="is_new">
+          <!-- 
+          Gif of minion. -->
+          <img id="thinking_monkey_left" src="../../assets/images/thinking_monkey.gif" alt="" srcset="">
+        </div>
         <div *ngFor="let language of languages_panel" [hidden]="!is_new">
           <span id="language">{{ language }}</span>
         </div>
       </div>
       <div id="content">
-        <div [hidden]="is_new">
-          Translation not available. <br>
+        <div id="add_new" [hidden]="is_new">
+          
+          <div id="add_new_title">Translation not available.</div>
+
+          <!-- 
+          Gif of minion. -->
+          <img id="sad_minion" src="http://www.kentionary.com/assets/images/sad_minion.gif" alt="Sad minion"><br>
+
           <button mat-raised-button color="primary" (click)="add_new_translation()">
-            Add new translation
+            Add new translation here
           </button>
         </div>
 
-        <div *ngFor="let translation of translations"> 
+        <div *ngFor="let translation of translations"  [hidden]="!is_new"> 
           <span id="term">{{ translation.term }} </span>
           <span id="languages">{{ translation.language }} </span>
           <span id="word">{{ translation.words }} </span>
@@ -90,6 +100,13 @@
         </div>
       </div>
     <div id="right_panel"  class="panels">
+
+      <div id="add_new" [hidden]="is_new">
+        <!-- 
+        Gif of minion. -->
+        <img id="thinking_monkey_right" src="http://www.kentionary.com/assets/images/thinking_monkey.gif" alt="Thinking">
+      </div>
+
       <div [hidden]="is_hidden_stats">
         <div id="title_stats">
           <mat-icon id="chart_icon"> bubble_chart</mat-icon>
@@ -132,7 +149,6 @@
     </div>
   </div>
 </div>
-
 
 <h2>Kenya National Anthem</h2>
 <div id="national_anthem">

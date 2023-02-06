@@ -39,9 +39,9 @@ export class AddComponent implements OnInit {
   selected_term?: Selected_term | New_term;
   //
   //The word(s) to translate.
-  translate_from_control = new FormControl('house', Validators.required);
-  translate_to_control = new FormControl('nyumba', Validators.required);
-  synonym_word_control = new FormControl('nyumba');
+  translate_from_control = new FormControl('', Validators.required);
+  translate_to_control = new FormControl('', Validators.required);
+  synonym_word_control = new FormControl('');
   //
   //Example sentence(s).
   sentence_to_control = new FormControl();
@@ -49,17 +49,17 @@ export class AddComponent implements OnInit {
   synonym_sentence_control = new FormControl();
   //
   //Language form control.
-  language_one_control = new FormControl('English', Validators.required);
-  language_two_control = new FormControl('Swahili', Validators.required);
-  language_three_control = new FormControl('Gikuyu');
+  language_one_control = new FormControl('', Validators.required);
+  language_two_control = new FormControl('', Validators.required);
+  language_three_control = new FormControl('');
   //
   //Meaning form control.
-  meaning_from_control = new FormControl('A buidling to live in', Validators.required);
-  meaning_to_control = new FormControl('Mahali pa kuishi', Validators.required);
-  synonym_meaning_control = new FormControl('Handu ha guikara');
+  meaning_from_control = new FormControl('', Validators.required);
+  meaning_to_control = new FormControl('', Validators.required);
+  synonym_meaning_control = new FormControl('');
   //
   //Category form control.
-  category_control = new FormControl('noun', Validators.required);
+  category_control = new FormControl('', Validators.required);
   //
   //The list of languages, from the database.
   languages?: Array<Language['data']>;
@@ -109,15 +109,21 @@ export class AddComponent implements OnInit {
   ngOnInit(): void {
     //
     //Get the query parameter.
-    // this.route.queryParams.subscribe(
-    //   params => {
-    //     //
-    //     //Set the value of the word to translate from.
-    //     this.translate_from_control.setValue(params['word']);
-    //   }
-    // );
+    this.route.queryParams.subscribe(
+      params => {
+        //
+        //Set the value of the word to translate from.
+        this.translate_from_control.setValue(params['word']);
+        //
+        //Set the value of the language from.
+        this.language_one_control.setValue(params['language_from']);
+        //
+        //Set the value of the language to.
+        this.language_two_control.setValue(params['language_to']);
+      }
+    );
     //
-    //Retrieve the list of languages from the database
+    //Retrieve the list of languages from the database    
     this.language_service.get_language().subscribe(
       //
       (response: any) => {

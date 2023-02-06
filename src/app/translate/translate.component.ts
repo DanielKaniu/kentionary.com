@@ -1,7 +1,6 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import { TranslateService } from 'src/services/translate.service';
-import { Translation } from 'src/types/types';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { terms_snack_bar } from '../snackbar/snackbar';
 import { Router } from '@angular/router';
@@ -12,7 +11,7 @@ import { LanguageService } from 'src/services/language.service';
   templateUrl: './translate.component.html',
   styleUrls: ['./translate.component.css']
 })
-export class TranslateComponent implements OnInit, AfterViewInit  {
+export class TranslateComponent implements OnInit  {
   //
   //The show/hide state of the right panel.
   is_hidden_stats?: boolean; 
@@ -39,10 +38,10 @@ export class TranslateComponent implements OnInit, AfterViewInit  {
   language_to?: string | null;
   //
   //The word to translate.
-  word_control = new FormControl('nchi', Validators.required);
+  word_control = new FormControl('', Validators.required);
   //
   //Language form control.
-  language_from_control = new FormControl('Swahili', Validators.required);
+  language_from_control = new FormControl('', Validators.required);
   //
   //Language to control.
   language_to_control = new FormControl('', Validators.required);
@@ -97,10 +96,6 @@ export class TranslateComponent implements OnInit, AfterViewInit  {
     //The router.
     private router: Router
   ) { }
-  ngAfterViewInit(): void {
-    //
-    this.translate();
-  }
   //
   ngOnInit(): void {
     //
@@ -121,7 +116,6 @@ export class TranslateComponent implements OnInit, AfterViewInit  {
     //Hide the statistics.
     this.is_hidden_stats = true;
   }
-
   //
   //Get the translation.
   translate(): void{
@@ -180,6 +174,9 @@ export class TranslateComponent implements OnInit, AfterViewInit  {
               //
               //Make the elements for asking the user if to add a new translation or not.
               this.is_new = false;
+              //
+              //Alert the user.
+              this.open_snackbar('Tip💡: Ensure the languages + word match.');
             }
           }
         );
@@ -241,6 +238,9 @@ export class TranslateComponent implements OnInit, AfterViewInit  {
               //
               //Hide the statistics.
               this.is_hidden_stats = true;
+              //
+              //Alert the user.
+              this.open_snackbar('Tip💡: Ensure the language + word match.');
             }
           }
         );
@@ -348,11 +348,37 @@ export class TranslateComponent implements OnInit, AfterViewInit  {
     //First check if the input field has a value.
     if(input.value !== ''){
       //
-      //Open the page that lets the user add a new translation.
-      this.router.navigate(
-        ['/add'], 
-        { queryParams: {word: this.word}}  
-      );
+      //Check if the filter is selected.
+      //
+      //At this point the filter button is selected.
+      if (this.is_new !== true ) {
+        //Open the page that lets the user add a new translation.
+        this.router.navigate(
+          ['/add'], 
+          { 
+            queryParams: {
+              word: this.word, 
+              language_from: this.language_from,
+              language_to: this.language_to
+          }
+          }  
+        );
+      }
+      //
+      //At this point the filter is not selected.
+      else{
+        //
+        //Open the page that lets the user add a new translation.
+        this.router.navigate(
+          ['/add'], 
+          { 
+            queryParams: {
+              word: this.word, 
+              language_from: this.language_from
+          }
+          }  
+        );
+      }
     }
     //
     //At this point the input field is empty.

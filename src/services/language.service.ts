@@ -21,12 +21,10 @@ export class LanguageService {
   //Get the list of languages from the database.
   get_language(){
     //
-    return this.http.get<Array<Language>>(
+    return this.http.get<Language[]>(
         //
         //The API URL.
         url + 'data/get_language.php',
-        //
-        //Specifies the format in which to return data.
         {responseType: 'json'}
       );
   }

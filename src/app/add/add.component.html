@@ -110,7 +110,7 @@
   </mat-expansion-panel>
   <!-- 
   The synonyms. -->
-  <mat-expansion-panel #exp_three [expanded]="step === 1" (opened)="setStep(1)" [disabled]="false">
+  <mat-expansion-panel #exp_three [expanded]="step === 1" (opened)="setStep(1)" [disabled]="is_disabled">
     <mat-expansion-panel-header>
       <mat-panel-title> Synonyms: </mat-panel-title>
       <mat-panel-description>

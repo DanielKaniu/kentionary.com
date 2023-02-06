@@ -24,7 +24,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDividerModule } from '@angular/material/divider';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
@@ -33,6 +32,7 @@ import { MatCardModule} from '@angular/material/card';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatCheckboxModule} from '@angular/material/checkbox';
 import { MatChipsModule} from '@angular/material/chips';
+import { MatDividerModule } from '@angular/material/divider';
 //
 @NgModule({
   declarations: [
@@ -57,7 +57,6 @@ import { MatChipsModule} from '@angular/material/chips';
     MatInputModule,
     MatExpansionModule,
     MatIconModule,
-    MatDividerModule,
     MatDialogModule,
     MatSnackBarModule,
     MatButtonModule,
@@ -65,7 +64,8 @@ import { MatChipsModule} from '@angular/material/chips';
     MatCardModule,
     MatBadgeModule,
     MatCheckboxModule,
-    MatChipsModule
+    MatChipsModule,
+    MatDividerModule
   ],
   exports: [RouterModule],
   providers: [],

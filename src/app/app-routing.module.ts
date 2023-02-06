@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+//
+//Components.
 import { AboutComponent } from './about/about.component';
 import { AddComponent } from './add/add.component';
 import { ContactComponent } from './contact/contact.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { SupportComponent } from './support/support.component';
 import { TranslateComponent } from './translate/translate.component';
-
 //
 //The paths the app is to follow.
 const routes: Routes = [

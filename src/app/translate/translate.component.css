@@ -79,7 +79,7 @@ The panel for the translations. */
 #content {
   grid-area: b;
   background: #A3F7BF;
-  color: #60316E;
+  color: #2f1935;
   border-radius: 2%;
   overflow-y: auto;
   padding-top: 3%;
@@ -173,13 +173,33 @@ h2 {
   font-weight: bold;
 }
 #chart_icon{
-  color: purple;
+  color: rgb(85, 255, 0);
   font-size: 2rem;
 }
 #title_stats_text{
   margin-left: 7%;
   text-decoration: underline;
 }
+#add_new{
+  text-align: center;
+  align-items: center;
+}
+#add_new_title{
+  font-size: larger;
+  font-weight: 800;
+  font-style: italic;
+  margin-bottom: 3%;
+}
+#sad_minion{
+  width: 40%;
+  margin-bottom: 3%;
+  border-radius: 20px;
+}
+#thinking_monkey_left, #thinking_monkey_right{
+  width: 30%;
+  margin-top: 10%;
+}
+
 /*
 Style for tablets devices. */
 @media only screen and (max-width: 768px) {
@@ -268,6 +288,10 @@ The panel for the translations. */
     display: block;
     border-radius: 1rem;
   }
+  .example{
+    display: block;
+    margin-left: 3%;
+  }
 }
 /*
 Style for mobile devices. */
@@ -317,5 +341,13 @@ Style for mobile devices. */
 
   .input_word{
     width: 60%;
+  }
+  #thinking_monkey_left{
+    width: 30%;
+    margin-top: 35%;
+  }
+  #thinking_monkey_right{
+    width: 25%;
+    margin-top: 10%;
   }
 }
