@@ -5,7 +5,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { terms_snack_bar } from '../snackbar/snackbar';
 import { Router } from '@angular/router';
 import { LanguageService } from 'src/services/language.service';
-
+import { AutoSuggestService } from 'src/services/auto-suggest.service';
+//
 @Component({
   selector: 'app-translate',
   templateUrl: './translate.component.html',
@@ -28,6 +29,12 @@ export class TranslateComponent implements OnInit  {
   //The state to control displaying the translations.
   is_translated: boolean = true;
   //
+  //Server data based on the auto-suggesting feature.
+  auto_suggest_words?: any;
+  //
+  //Each suggested word.
+  suggestion?: any;
+  //
   //The word to translate.
   word?: string | null;
   //
@@ -37,7 +44,7 @@ export class TranslateComponent implements OnInit  {
   //The language of the word to translate to.
   language_to?: string | null;
   //
-  //The word to translate.
+  //The control of the word to translate.
   word_control = new FormControl('', Validators.required);
   //
   //Language form control.
@@ -94,7 +101,10 @@ export class TranslateComponent implements OnInit  {
     public _snackBar: MatSnackBar,
     //
     //The router.
-    private router: Router
+    private router: Router,
+    //
+    //The auto-suggest feature.
+    private auto_suggest_service: AutoSuggestService
   ) { }
   //
   ngOnInit(): void {
@@ -105,7 +115,7 @@ export class TranslateComponent implements OnInit  {
       (response: any) => {
         //
         //Ensure we have some response.
-        if (response.success === true) {
+        if (response.ok === true) {
           //
           //Get the data and save it globally.
           this.select_languages = response.data;
@@ -156,7 +166,7 @@ export class TranslateComponent implements OnInit  {
             //Check if the server has sent some results.
             //
             //At this point there are some results.
-            if (response.success === true) {
+            if (response.ok === true) {
               //
               //Show the translations.
               this.is_new = true;
@@ -217,7 +227,7 @@ export class TranslateComponent implements OnInit  {
             //Check if the server has sent some results.
             //
             //At this point there are some results.
-            if (response.success === true) {
+            if (response.ok === true) {
               //
               //Show the translations.
               this.is_new = true;
@@ -313,7 +323,6 @@ export class TranslateComponent implements OnInit  {
         //
         //Add the translation to the translation array.
         this.translations.push({words: translated});
-        console.log(this.translations);
         //
         //Languages and their translations.
         this.language_translations.push(translations);
@@ -395,6 +404,56 @@ export class TranslateComponent implements OnInit  {
     //Save the value globally.
     this.checked = value;
   }
+  //
+  //Detect keyup changes in the input field.
+  auto_suggest(event: any){
+    //
+    //Compile the payload data.
+    // const values = {
+    //   letter: event.target.value,
+    //   language: this.language_from_control.value
+    // }
+    const letter = event.target.value;
+    const language = this.language_from_control.value
+    //
+    //Call ther service responsible for the auto-suggest feature.
+    this.auto_suggest_service.auto_suggest(
+      letter, language!
+    ).subscribe(
+      //
+      //The server response.
+      (response: any)=>{
+        //
+        //Check if I get back some server data.
+        if(response.ok === true){
+          //
+          //Save the server data globally.
+          this.auto_suggest_words = response.data;
+          //
+          //Loop through the suggestions.
+          this.auto_suggest_words?.forEach((suggestion: any) => {
+            //
+            //The words suggested to the user.
+            this.suggestion = suggestion;
+          })
+          //
+          this.word_control.valueChanges.subscribe(newValue=>{
+            this.auto_suggest_words = this.filterValues(newValue!);
+        })
+        }
+        //
+        //At this point there is no server data.
+        else{
+
+        }
+      }
+    );
+  }
+  //
+  filterValues(search: string) {
+    return this.auto_suggest_words!.filter((value: any)=>
+    value.toString().toLowerCase().indexOf(search.toLowerCase()) === 0);
+}
   //
   //Display the snackbar accordingly.
   open_snackbar(message: string) {

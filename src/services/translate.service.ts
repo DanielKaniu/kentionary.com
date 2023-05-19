@@ -21,7 +21,7 @@ export class TranslateService {
     return this.http.post(
         //
         //The API URL.
-        url + 'data/get_translation.php',
+        url + 'translate/get_translation',
         //
         //The word to translate.
         {
@@ -40,7 +40,7 @@ export class TranslateService {
     return this.http.post(
         //
         //The API URL.
-        url + 'data/get_translation_filter.php',
+        url + 'translate/get_translation_filter',
         //
         //The word to translate.
         {

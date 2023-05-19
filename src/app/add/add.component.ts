@@ -39,7 +39,7 @@ export class AddComponent implements OnInit {
   selected_term?: Selected_term | New_term;
   //
   //The word(s) to translate.
-  translate_from_control = new FormControl('', Validators.required);
+  translate_from_control = new FormControl('home', Validators.required);
   translate_to_control = new FormControl('', Validators.required);
   synonym_word_control = new FormControl('');
   //
@@ -49,8 +49,8 @@ export class AddComponent implements OnInit {
   synonym_sentence_control = new FormControl();
   //
   //Language form control.
-  language_one_control = new FormControl('', Validators.required);
-  language_two_control = new FormControl('', Validators.required);
+  language_one_control = new FormControl('English', Validators.required);
+  language_two_control = new FormControl('Swahili', Validators.required);
   language_three_control = new FormControl('');
   //
   //Meaning form control.
@@ -59,7 +59,7 @@ export class AddComponent implements OnInit {
   synonym_meaning_control = new FormControl('');
   //
   //Category form control.
-  category_control = new FormControl('', Validators.required);
+  category_control = new FormControl('noun', Validators.required);
   //
   //The list of languages, from the database.
   languages?: Array<Language['data']>;
@@ -129,7 +129,7 @@ export class AddComponent implements OnInit {
       (response: any) => {
         //
         //Ensure we have some response.
-        if (response.success === true) {
+        if (response.ok === true) {
           //
           //Get the data and save it globally.
           this.languages = response.data;
@@ -143,7 +143,7 @@ export class AddComponent implements OnInit {
       (response: any) => {
         //
         //Ensure we have some response.
-        if (response.success === true) {
+        if (response.ok === true) {
           //
           //Get the data and save it globally.
           this.categories = response.data;
@@ -213,9 +213,8 @@ export class AddComponent implements OnInit {
           this.synonym_state = false;
           //
           //Pass the words that will use to get the terms to the dialog box
-          this.openDialog(this.words_for_terms);
+          this.openDialog();
         } else {
-          console.log(this.words_for_terms);
           //
           //Ask the user to provide synonym.
           this.open_snackbar('Please provide a synonym');
@@ -229,7 +228,7 @@ export class AddComponent implements OnInit {
         this.words_for_terms.push(this.synonym_word_control.value!);
         //
         //Pass the words that will use to get the terms to the dialog box
-        this.openDialog(this.words_for_terms);
+        this.openDialog();
       }
     }
   }
@@ -284,7 +283,7 @@ export class AddComponent implements OnInit {
         (response: any) => {
           //
           //First ensure we have a response from the database.
-          if (response.success === true) {
+          if (response.ok === true) {
             //
             //Save the response globally.
             const check_response: string = response.data;
@@ -294,7 +293,7 @@ export class AddComponent implements OnInit {
           } else {
             //
             //Let the user know the checking is unsuccessful.
-            this.open_snackbar('Unable to check, try again');
+            this.open_snackbar('Unable to check 😔, try again');
           }
         }
       );
@@ -314,13 +313,13 @@ export class AddComponent implements OnInit {
         (response: any) => {
           //
           //First ensure we have a response from the database.
-          if (response.success === true) {
+          if (response.ok === true) {
             //
             //Save the response globally.
             const check_response: string = response.data;
             //
             //Save the new translations, if they are not linked to a term.
-            this.save(check_response);
+            this.save_no_synonym(check_response);
           } else {
             //
             //Let the user know the checking is unsuccessful.
@@ -370,6 +369,36 @@ export class AddComponent implements OnInit {
     this.verify(check_response, values);
   }
   //
+  //Save the translation in the database.
+  save_no_synonym(check_response: string): void {
+    //
+    //Compile content of the word to translate from.
+    const translation_from: Word_to_save['word_from'] = {
+      language: this.language_one_control.value,
+      word: this.translate_from_control.value,
+      meaning: this.meaning_from_control.value,
+      sentence: this.sentence_from_control.value,
+    };
+    //
+    //Compile content of the word to translate to.
+    const translation_to = {
+      language: this.language_two_control.value,
+      word: this.translate_to_control.value,
+      meaning: this.meaning_to_control.value,
+      sentence: this.sentence_to_control.value,
+    };
+    //
+    //Compile the values.
+    const values = {
+      translation_from: translation_from,
+      translation_to: translation_to,
+      term: this.selected_term,
+    };
+    //
+    //Verify the results from checking the link between a word and a term.
+    this.verify(check_response, values);
+  }
+  //
   //Verify the results from checking the link between a word and a term.
   verify(check_response: string, values: any) {
     //
@@ -402,7 +431,7 @@ export class AddComponent implements OnInit {
             (response) => {
               //
               //Check if the execution to the server is successful.
-              if (response.success === true) {
+              if (response.ok === true) {
                 //
                 //Display a positive message.
                 this.open_snackbar('Successfully saved. Good job! 👏');
@@ -418,6 +447,8 @@ export class AddComponent implements OnInit {
           );
           break;
         //
+        //Save the translation_to and synonym in the database, link them with the
+        //selected term.
         case 'translation_to_synonym':
           //
           //Add a property to the values object.
@@ -430,7 +461,7 @@ export class AddComponent implements OnInit {
             (response) => {
               //
               //Check if the execution to the server is successful.
-              if (response.success === true) {
+              if (response.ok === true) {
                 //
                 //Display a positive message.
                 this.open_snackbar('Successfully saved. Good job! 👏');
@@ -460,7 +491,7 @@ export class AddComponent implements OnInit {
             (response) => {
               //
               //Check if the execution to the server is successful.
-              if (response.success === true) {
+              if (response.ok === true) {
                 //
                 //Display a positive message.
                 this.open_snackbar('Successfully saved. Good job! 👏');
@@ -490,7 +521,7 @@ export class AddComponent implements OnInit {
             (response) => {
               //
               //Check if the execution to the server is successful.
-              if (response.success === true) {
+              if (response.ok === true) {
                 //
                 //Display a positive message.
                 this.open_snackbar('Successfully saved. Good job! 👏');
@@ -506,6 +537,7 @@ export class AddComponent implements OnInit {
           );
           break;
         //
+        //Save only the synonym in the database.
         case 'synonym':
           //
           //Add a property to the values object.
@@ -518,7 +550,7 @@ export class AddComponent implements OnInit {
             (response) => {
               //
               //Check if the execution to the server is successful.
-              if (response.success === true) {
+              if (response.ok === true) {
                 //
                 //Display a positive message.
                 this.open_snackbar('Successfully saved. Good job! 👏');
@@ -534,6 +566,7 @@ export class AddComponent implements OnInit {
           );
           break;
         //
+        //Save only the translation to in the database.
         case 'translation_to':
           //
           //Add a property to the values object.
@@ -546,7 +579,7 @@ export class AddComponent implements OnInit {
             (response) => {
               //
               //Check if the execution to the server is successful.
-              if (response.success === true) {
+              if (response.ok === true) {
                 //
                 //Display a message.
                 this.open_snackbar('Successfully saved. Good job! 👏');
@@ -560,6 +593,7 @@ export class AddComponent implements OnInit {
           //
           break;
         //
+        //Save only the translation from in the database.
         case 'translation_from':
           //
           //Add a property to the values object.
@@ -572,7 +606,7 @@ export class AddComponent implements OnInit {
             (response) => {
               //
               //Check if the execution to the server is successful.
-              if (response.success === true) {
+              if (response.ok === true) {
                 //
                 //Display a positive message.
                 this.open_snackbar('Successfully saved. Good job! 👏');
@@ -629,7 +663,7 @@ export class AddComponent implements OnInit {
             (response) => {
               //
               //Check if the execution to the server is successful.
-              if (response.success === true) {
+              if (response.ok === true) {
                 //
                 //Display a positive message.
                 this.open_snackbar('Successfully saved. Good job! 👏');
@@ -657,7 +691,7 @@ export class AddComponent implements OnInit {
             (response) => {
               //
               //Check if the execution to the server is successful.
-              if (response.success === true) {
+              if (response.ok === true) {
                 //
                 //Display a message.
                 this.open_snackbar('Successfully saved. Good job! 👏');
@@ -683,7 +717,7 @@ export class AddComponent implements OnInit {
             (response) => {
               //
               //Check if the execution to the server is successful.
-              if (response.success === true) {
+              if (response.ok === true) {
                 //
                 //Display a positive message.
                 this.open_snackbar('Successfully saved. Good job! 👏');
@@ -721,7 +755,7 @@ export class AddComponent implements OnInit {
     };
     //
     //Compile content of the word to translate to.
-    const translation_to = {
+    const translation_to: Word_to_save['word_to'] = {
       language: this.language_two_control.value,
       word: this.translate_to_control.value,
       meaning: this.meaning_to_control.value,
@@ -729,7 +763,7 @@ export class AddComponent implements OnInit {
     };
     //
     //Compile content of the synonyms.
-    const synonym = {
+    const synonym: Word_to_save['synonym'] = {
       language: this.language_three_control.value,
       word: this.synonym_word_control.value,
       meaning: this.synonym_meaning_control.value,
@@ -747,8 +781,11 @@ export class AddComponent implements OnInit {
     //
     //Check if a user is adding a new synonym.
     //
-    //If the user is not adding a new synonym the add the translation from, translation to and synonym.
+    //If the user is adding a new synonym, add also the translation from, translation to.
     if (this.synonym_state === true) {
+      //
+      //Add a property to the values object.
+      values.type = 'all';
       //
       //Add the state of the synonyms to the values object with is to be passed to the server.
       values.synonym_state = true;
@@ -760,7 +797,7 @@ export class AddComponent implements OnInit {
         (response) => {
           //
           //Check if the execution to the server is successful.
-          if (response.success === true) {
+          if (response.ok === true) {
             //
             //Display a positive message.
             this.open_snackbar('Successfully saved. Good job! 👏');
@@ -785,6 +822,9 @@ export class AddComponent implements OnInit {
       //Add the state of the synonyms to the values object with is to be passed to the server.
       values.synonym_state = false;
       //
+      //Add a property to the values object.
+      values.type = 'translation_from_to';
+      //
       //Save the synonym in the database, link it with the selected term.
       this.save_service.save_new_term(values).subscribe(
         //
@@ -792,7 +832,7 @@ export class AddComponent implements OnInit {
         (response) => {
           //
           //Check if the execution to the server is successful.
-          if (response.success === true) {
+          if (response.ok === true) {
             //
             //Display a positive message.
             this.open_snackbar('Successfully saved. Good job! 👏');
@@ -836,12 +876,13 @@ export class AddComponent implements OnInit {
   }
   //
   //Pop up the dialog box.
-  openDialog(word: Array<string> | null): void {
+  openDialog(): void {
     //
+    //Pass (to the dialog box) the words to use in searching for terms.
     const dialogRef: MatDialogRef<terms_dialog, any> = this.dialog.open(
       terms_dialog,
       {
-        data: { word: word, category: this.categories },
+        data: { word: this.words_for_terms, category: this.categories },
       }
     );
     //

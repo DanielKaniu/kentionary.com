@@ -14,7 +14,7 @@ $language_from = $word['translate_from']['language'];
 $translate_to = $word['translate_to']['word'];
 $language_to = $word['translate_to']['language'];
 //
-//The word to translate from.
+//The synonym.
 $synonym = $word['synonym']['word'];
 $language_synonym = $word['synonym']['language'];
 //
@@ -56,9 +56,6 @@ class check {
     //
     //The main method.
     function execute(){
-        //
-        //Use the pdo connection established in the config file.
-        global $pdo;
         //
         //The results from interrogating the database.
         $translate_from = $this -> check_translate_from();

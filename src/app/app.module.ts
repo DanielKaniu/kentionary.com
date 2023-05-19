@@ -33,6 +33,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatCheckboxModule} from '@angular/material/checkbox';
 import { MatChipsModule} from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 //
 @NgModule({
   declarations: [
@@ -52,6 +53,8 @@ import { MatDividerModule } from '@angular/material/divider';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+    //
+    //Material.
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
@@ -65,7 +68,8 @@ import { MatDividerModule } from '@angular/material/divider';
     MatBadgeModule,
     MatCheckboxModule,
     MatChipsModule,
-    MatDividerModule
+    MatDividerModule,
+    MatAutocompleteModule,
   ],
   exports: [RouterModule],
   providers: [],

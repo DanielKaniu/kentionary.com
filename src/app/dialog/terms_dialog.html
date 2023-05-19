@@ -6,7 +6,7 @@
   <h2><b>Create a new term</b></h2>
 
   <mat-form-field appearance="fill">
-    <mat-label>Enter word, e.g., home</mat-label>
+    <mat-label>Enter English word, e.g., home</mat-label>
     <input type="text" matInput [formControl]="term_control" /> </mat-form-field
   ><br />
 
@@ -24,7 +24,10 @@
     <mat-error *ngIf="category_control.hasError('required')">
       Please choose a part of speech
     </mat-error> </mat-form-field
-  ><br />
+  ><br>
+
+  <i id="example"> Word + Category = <b><u>Term</u></b></i><br><br>
+  <i id="example">E.g home + noun = <b><u>home (noun)</u></b></i><br><br>
 
   <mat-form-field appearance="fill">
     <mat-label>Enter meaning in English</mat-label>
@@ -34,7 +37,6 @@
     </mat-error>
   </mat-form-field><br>
 
-  <i>E.g home + noun = <b><u>home (noun)</u></b></i>
 </div>
 
 <div mat-dialog-actions>

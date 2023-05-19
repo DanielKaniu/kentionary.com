@@ -23,7 +23,7 @@ export class SaveService {
     return this.http.post<Save_result>(
         //
         //The API URL.
-        url + 'save/save.php',
+        url + 'add_word/get_request',
         //
         //The request body.
         {values: values},
@@ -35,12 +35,11 @@ export class SaveService {
   //
   //Save the translationsand link them with their respective terms.
   save_new_term(values: any){
-    console.log(values);
     //
     return this.http.post<Save_result>(
         //
         //The API URL.
-        url + 'save/save_new_term.php',
+        url + 'add_word/get_request',
         //
         //The request body.
         {values: values},

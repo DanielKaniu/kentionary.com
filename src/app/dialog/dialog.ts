@@ -24,9 +24,9 @@ import { terms_snack_bar } from "../snackbar/snackbar";
     is_hidden?: boolean;
     //
     //The form controls.
-    term_control = new FormControl('housing', Validators.required);
-    category_control = new FormControl('noun', Validators.required);
-    meaning_term_control = new FormControl('a residential place', Validators.required);
+    term_control = new FormControl('', Validators.required);
+    category_control = new FormControl('', Validators.required);
+    meaning_term_control = new FormControl('', Validators.required);
     //
     //The terms.
     terms?: Array<Term['data']>;
@@ -58,14 +58,18 @@ import { terms_snack_bar } from "../snackbar/snackbar";
       private _snackBar: MatSnackBar
     ) {}
     //
+    //Show/hide some elements accordingly.
+    ngOnInit(): void {
+      //
+      //First hide the necessary elements.
+      this.is_hidden = true;
+    }
+    //
     //Get the terms after initializing the view.
     ngAfterViewInit(): void {
       //
       //Get the terms associated with the word provided by the user.
       this.get_terms();
-      //
-      //First hide the necessary elements.
-      this.is_hidden = true;
     }
     //
     //Fetch the terms.
@@ -77,7 +81,7 @@ import { terms_snack_bar } from "../snackbar/snackbar";
         (response: any) => {
           //
           //Ensure the fetching is successful.
-          if(response.success === true){
+          if(response.ok === true){
             //
             //Save the terms globally.
             this.terms = response.data;
@@ -133,11 +137,15 @@ import { terms_snack_bar } from "../snackbar/snackbar";
     get_selected_term(): void{
       //
       //Ensure a radio button is selected.
+      //
+      //At this point, the user has not yet selected a term.
       if(this.selected_term === undefined){
         //
         //Ask the user to select one option.
         this.open_snackbar('Select the term');
       }
+      //
+      //At this point, the user has selected a term.
       else{
         //
         //Close the dialog box and pass the selected term to the mother component.

@@ -82,6 +82,14 @@ The link to navigate to the page for adding a new translation. */
     font-size: 3rem;
     z-index: 1;
 }
+/* 
+Highlight the selected route in the sidenav */
+.is-active {
+    background-color: rgb(240, 230, 230);
+    padding: 2%;
+    margin-right: 1%;
+    border-radius: 0.2rem 1rem 1rem 0.2rem ;
+}
 /*
 Style for tablets + mobile devices. */
 @media only screen and (max-width: 768px) {
@@ -102,12 +110,24 @@ Style for tablets + mobile devices. */
         margin-top: 2%;
         display: flex;
         justify-content: space-evenly;
+        align-items: center;
     }  
     mat-icon{
-        font-size: 3rem;
-        color: #473C33;
+        font-size: 2rem;
+        color: #625d59;
+        margin-right: 0;
     } 
     #add_new_translation{
         display: none;
+    }
+    /* 
+    Highlight the selected route in the sidenav */
+    .is-active {
+        font-weight: bolder;
+        background: white;
+        color: rgb(10, 9, 9);
+        padding: 0;
+        margin: 0;
+        border-radius: 0;
     }
 }

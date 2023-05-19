@@ -131,6 +131,7 @@ The translations. */
 The national anthem. */
 #national_anthem {
   display: flex;
+  width: 80%;
   justify-content: center;
   background: #F7EFE5;
   margin: 0px 5% 0px 5%;
@@ -143,11 +144,15 @@ h2 {
 }
 #swahili_anthem,
 #english_anthem {
-  width: 100%;
+  width: 40%;
+  font-size: large;
+  font-family: Georgia, "Times New Roman", Times, serif;
 }
 .anthem_language {
+  display: block;
   text-decoration: underline;
   font-weight: bold;
+  margin-bottom: 3%;
 }
 #stats{
   margin-top: 15%;
@@ -199,7 +204,6 @@ h2 {
   width: 30%;
   margin-top: 10%;
 }
-
 /*
 Style for tablets devices. */
 @media only screen and (max-width: 768px) {
@@ -272,6 +276,7 @@ The panel for the translations. */
   }
   #lang_to_checkbox{
     display: block;
+    margin-top: 2.5%;
     margin-bottom: 2%;
   }
   #check_box{
@@ -286,11 +291,23 @@ The panel for the translations. */
   }
   #national_anthem {
     display: block;
+    width: 94%;
     border-radius: 1rem;
+    font-size: larger;
+    word-spacing: 0.3rem;
+    margin-bottom: 10%;
+    margin: 0px 1.5% 0px 1.5%;
   }
   .example{
     display: block;
     margin-left: 3%;
+  }
+  #swahili_anthem,
+  #english_anthem {
+    width: fit-content;
+    margin-top: 5%;
+    margin-left: 10%;
+    margin-bottom: 5%;
   }
 }
 /*

@@ -1,0 +1,46 @@
+form{
+    text-align: center;
+    margin: auto;
+}
+mat-form-field{
+    /* display: block; */
+    width: 30%;
+}
+#container{
+ text-align: center;
+}
+#saf{
+    width: 6rem;
+    height: 4rem;
+}
+h2{
+    margin-top: 2%;
+}
+mat-icon{
+    margin-left: 1.5%;
+    color: orangered;
+}
+#equity{
+    width: 25%;
+    margin-top: 2.5%;
+    margin-bottom: 5%;
+}
+h3{
+    font-weight: 500;
+    font-style: italic;
+}
+/*
+Style for tablets + mobile devices. */
+@media only screen and (max-width: 768px) {
+    h2{
+        margin-top: 5%;
+    }
+    #equity{
+        width: 70%;
+        height: 50%;
+        margin-top: 10%;
+    }
+    h3{
+        margin-top: 10%;
+    }
+}

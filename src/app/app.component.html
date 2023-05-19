@@ -1,5 +1,5 @@
 <mat-drawer-container id="sidenav_container" autosize>
-    <mat-drawer #drawer id="sidenav" mode="side" mode="side">
+    <mat-drawer #drawer id="sidenav" mode="side" opened="true">
       <div id="sidenav_logo_container">
         <img id="logo_sidenav" src="http://www.kentionary.com/assets/images/kenny.png" alt="Kentionary's Logo">
         <div id="title_sidenav">KENTIONARY INC.</div>
@@ -7,25 +7,25 @@
       </div>
 
       
-        <span class="icon" routerLink="/translate">
+        <span class="icon" routerLink="/translate" [routerLinkActive]="['is-active']">
           <mat-icon>g_translate</mat-icon>Translate
         </span>
       
-      <span class="icon" routerLink="/add">
+      <span class="icon" routerLink="/add" [routerLinkActive]="['is-active']">
         <mat-icon>add_circle</mat-icon>Add new translation
       </span>
       
-        <span class="icon" routerLink="/about">
+        <span class="icon" routerLink="/about" [routerLinkActive]="['is-active']">
           <mat-icon>history</mat-icon>About Us 
         </span>
       
-        <span class="icon" routerLink="/contact">
+        <span class="icon" routerLink="/contact" [routerLinkActive]="['is-active']">
           <mat-icon>contact_phone</mat-icon>Contact Us
         </span>
 
-        <!-- <span class="icon" routerLink="/support">
-          <mat-icon>attach_money</mat-icon>Provide Support
-        </span> -->
+        <span class="icon" routerLink="/support" [routerLinkActive]="['is-active']">
+          <mat-icon>sentiment_satisfied</mat-icon>Buy Us Coffee
+        </span>
 
       <div id="copyright">© 2023 Kentionary, Inc.</div>
     </mat-drawer>
@@ -42,16 +42,15 @@
     </div>
 </mat-drawer-container>
 <div id="mobile_view">
+    <mat-icon class="icon_toolbar" routerLink="/translate" [routerLinkActive]="['is-active']">translate</mat-icon>
   
-    <mat-icon class="icon_toolbar" routerLink="/translate">g_translate</mat-icon>
-  
-    <mat-icon class="icon_toolbar" routerLink="/add">add_circle</mat-icon>
+    <mat-icon class="icon_toolbar" routerLink="/add" [routerLinkActive]="['is-active']">add_circle_outline</mat-icon>
 
-    <mat-icon class="icon_toolbar" routerLink="/about">history</mat-icon>
+    <mat-icon class="icon_toolbar" routerLink="/about" [routerLinkActive]="['is-active']">history</mat-icon>
 
-    <mat-icon class="icon_toolbar" routerLink="/contact">contact_phone</mat-icon>
+    <mat-icon class="icon_toolbar" routerLink="/contact" [routerLinkActive]="['is-active']">mail_outline</mat-icon>
   
-    <!-- <mat-icon class="icon" routerLink="/support">attach_money</mat-icon> -->
+    <mat-icon class="icon_toolbar" routerLink="/support" [routerLinkActive]="['is-active']">sentiment_satisfied</mat-icon>
 </div>
 
 <mat-icon

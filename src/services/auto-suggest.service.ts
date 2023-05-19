@@ -1,14 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Term, Word_for_term } from 'src/types/types';
-//
-//The path to the server.
 import { url } from './url';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TermService {
+export class AutoSuggestService {
   //
   constructor(
     //
@@ -16,16 +13,19 @@ export class TermService {
     private http: HttpClient
   ) { }
   //
-  //Get the list of languages from the database.
-  get_term(word: Array<Word_for_term>){
+  //Get the list of categories from the database.
+  auto_suggest(letter: string, language: string){
     //
-    return this.http.post<Term>(
+    return this.http.post(
         //
         //The API URL.
-        url + 'check/get_term',
+        url + 'translate/auto_suggest',
         //
-        //The request body
-        {word: word},
+        //The payload data.
+        {
+          letter: letter,
+          language: language
+        },
         //
         //Specifies the format in which to return data.
         {responseType: 'json'}

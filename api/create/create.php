@@ -65,7 +65,7 @@ function create_term($term_name, $term_category){
         VALUES ('$term_name', '$term_category', 0, CURRENT_TIMESTAMP);";
     //
     //Execute the query.
-    $pdo->exec($query);
+    $pdo->exec($query);      
 }
 //
 //Add both meaning and example in the database.

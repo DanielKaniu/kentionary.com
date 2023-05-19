@@ -22,7 +22,7 @@ export class CategoryService {
     return this.http.get<Array<Category>>(
         //
         //The API URL.
-        url + 'data/get_category.php',
+        url + 'add_word/get_category',
         //
         //Specifies the format in which to return data.
         {responseType: 'json'}

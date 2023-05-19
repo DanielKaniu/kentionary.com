@@ -58,7 +58,7 @@ export class ContactComponent implements OnInit {
         (response: any) => {
           //
           //Check the state of the response and display a message to the user.
-          if(response.success === true){
+          if(response.ok === true){
             //
             //Positive message.
             this.open_snackbar('Success');

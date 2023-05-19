@@ -4,3 +4,6 @@ Style the label nodes. */
 label{
     display: block;
 }
+#example{
+    font-size: 80%;
+}

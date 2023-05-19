@@ -78,7 +78,7 @@ export interface Check {
 //
 //The results after successfully saving a translation.
 export interface Save_result{
-    success: boolean;
+    ok: boolean;
     data: {
         result: string;
     }

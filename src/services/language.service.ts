@@ -24,7 +24,7 @@ export class LanguageService {
     return this.http.get<Language[]>(
         //
         //The API URL.
-        url + 'data/get_language.php',
+        url + 'translate/get_language',
         {responseType: 'json'}
       );
   }
