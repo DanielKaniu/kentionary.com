@@ -1,13 +1,7 @@
-form{
-    text-align: center;
-    margin: auto;
-}
-mat-form-field{
-    /* display: block; */
-    width: 30%;
-}
 #container{
- text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 #saf{
     width: 6rem;
@@ -15,6 +9,7 @@ mat-form-field{
 }
 h2{
     margin-top: 2%;
+    text-align: center;
 }
 mat-icon{
     margin-left: 1.5%;
@@ -28,6 +23,14 @@ mat-icon{
 h3{
     font-weight: 500;
     font-style: italic;
+}
+#mpesa{
+    width: 50%;
+    background: yellowgreen;
+}
+#paypal{
+    width: 50%;
+    background: wheat;
 }
 /*
 Style for tablets + mobile devices. */
